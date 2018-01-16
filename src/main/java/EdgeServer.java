@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 import java.lang.Runtime;
 import java.lang.Process;
+import java.lang.Thread;
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import edgeOffloading.OffloadingGrpc;
@@ -67,29 +68,37 @@ public class EdgeServer {
 
 		@Override 
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
+			EdgeServer s = new EdgeServer();
 			OffloadingReply reply = OffloadingReply.newBuilder()
 				.setMessage("I am your father! \\\\(* W *)//")
 				.build();
-			System.out.println("Hello world!");
 			Runtime rt = Runtime.getRuntime();
 			try {
-				// Execute the command
-				String command = "docker run hello-world";
+				// pull the container image
+				String command = "docker pull bhu2017/facerec:1.0";
+				System.out.println("pull the container");
 				Process pr = rt.exec(command);
-
-				// Get the input steam and read from it
-				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-				String inputLine;
-				while((inputLine = in.readLine()) != null) {
-					System.out.println(inputLine);
-				}
-				in.close();
-				System.out.println("Input end");
 			} catch (IOException e) {
 				Thread.currentThread().interrupt();
 			}
+			Thread t = s.new faceThread();
+			t.start();
 			responseObserver.onNext(reply);
 			responseObserver.onCompleted();
+		}
+	}
+
+	public class faceThread extends Thread {
+		public void run() {
+			Runtime rt = Runtime.getRuntime();
+			try {
+				// start to run the container 
+				String command = "docker run -p 50052:50052 bhu2017/facerec:1.0";
+				System.out.println("start the container");
+				Process pr = rt.exec(command);
+			} catch (IOException e) {
+				Thread.currentThread().interrupt();
+			}
 		}
 	}
 }
