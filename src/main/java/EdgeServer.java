@@ -84,6 +84,7 @@ public class EdgeServer {
 			}
 			Thread t = s.new faceThread();
 			t.start();
+			System.out.println("Check face recognition container");
 			while(!containerReady("facial_container")) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(100);
@@ -92,7 +93,7 @@ public class EdgeServer {
 				}
 			}
 			try {
-				TimeUnit.MILLISECONDS.sleep(10);
+				TimeUnit.MILLISECONDS.sleep(10000);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
@@ -111,8 +112,8 @@ public class EdgeServer {
 				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String debug;
 				while((debug = in.readLine()) != null) {
-					System.out.println(debug);
 					if(debug.equals("true"))
+						System.out.println("Face recognition container is ready to serve!");
 						return true;
 				}
 				return false;
