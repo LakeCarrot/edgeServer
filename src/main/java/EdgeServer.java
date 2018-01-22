@@ -127,7 +127,7 @@ public class EdgeServer {
 			Runtime rt = Runtime.getRuntime();
 			try {
 			// start to run the container 
-				String command = "docker run -p 50052:50052 --name facial_container bhu2017/facerec:1.0";
+				String command = "docker run -p 50052:50052 --name facial_container bhu2017/facerec";
 
 				Process pr = rt.exec(command);
 				System.out.println("start the container");
