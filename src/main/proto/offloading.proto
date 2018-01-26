@@ -27,4 +27,3 @@ message OffloadingRequest {
 message OffloadingReply {
 	    string message = 1;
 }
-

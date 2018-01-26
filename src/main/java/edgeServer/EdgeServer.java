@@ -73,6 +73,7 @@ public class EdgeServer {
 			OffloadingReply reply = OffloadingReply.newBuilder()
 				.setMessage("I am your father! \\\\(* W *)//")
 				.build();
+
 			Runtime rt = Runtime.getRuntime();
 			try {
 				// pull the container image
@@ -82,6 +83,7 @@ public class EdgeServer {
 			} catch (IOException e) {
 				Thread.currentThread().interrupt();
 			}
+
 			Thread t = s.new faceThread();
 			t.start();
 			System.out.println("Check face recognition container");
@@ -127,7 +129,7 @@ public class EdgeServer {
 		public void run() {
 			Runtime rt = Runtime.getRuntime();
 			try {
-			// start to run the container 
+			// start to run the container
 				String command = "docker run -p 50052:50052 --name facial_container bhu2017/facerec";
 
 				Process pr = rt.exec(command);
