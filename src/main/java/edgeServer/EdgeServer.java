@@ -19,67 +19,76 @@ import edgeOffloading.OffloadingOuterClass.OffloadingRequest;
 import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
 public class EdgeServer {
-  private static final Logger logger = Logger.getLogger(EdgeServer.class.getName());
+	private static final Logger logger = Logger.getLogger(EdgeServer.class.getName());
 
-  private Server server;
-  private void start() throws IOException {
-    /* The port on which the server should run */
-    int port = 50051;
-    server = ServerBuilder.forPort(port)
-        .addService(new OffloadingImpl())
-        .build()
-        .start();
-    logger.info("Server started, listening on " + port);
-    Runtime.getRuntime().addShutdownHook(new Thread() {
-      @Override
-      public void run() {
-        // Use stderr here since the logger may have been reset by its JVM shutdown hook.
-        System.err.println("*** shutting down gRPC server since JVM is shutting down");
-        EdgeServer.this.stop();
-        System.err.println("*** server shut down");
-      }
-    });
-  }
+	private Server server;
+	private void start() throws IOException {
+		/* The port on which the server should run */
+		int port = 50051;
+		server = ServerBuilder.forPort(port)
+				.addService(new OffloadingImpl())
+				.build()
+				.start();
+		logger.info("Server started, listening on " + port);
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				// Use stderr here since the logger may have been reset by its JVM shutdown hook.
+				System.err.println("*** shutting down gRPC server since JVM is shutting down");
+				EdgeServer.this.stop();
+				System.err.println("*** server shut down");
+			}
+		});
+	}
 
-  private void stop() {
-    if (server != null) {
-      server.shutdown();
-    }
-  }
+	private void stop() {
+		if (server != null) {
+			server.shutdown();
+		}
+	}
 
-  /**
-   * Await termination on the main thread since the grpc library uses daemon threads.
-   */
-  private void blockUntilShutdown() throws InterruptedException {
-    if (server != null) {
-      server.awaitTermination();
-    }
-  }
+	/**
+	 * Await termination on the main thread since the grpc library uses daemon threads.
+	 */
+	private void blockUntilShutdown() throws InterruptedException {
+		if (server != null) {
+			server.awaitTermination();
+		}
+	}
 
-  /**
-   * Main launches the server from the command line.
-   */
-  public static void main(String[] args) throws IOException, InterruptedException {
-    final EdgeServer server = new EdgeServer();
-    server.start();
-    server.blockUntilShutdown();
-  }
+	/**
+	 * Main launches the server from the command line.
+	 */
+	public static void main(String[] args) throws IOException, InterruptedException {
+		final EdgeServer server = new EdgeServer();
+		server.start();
+		server.blockUntilShutdown();
+	}
 
 	static class OffloadingImpl extends OffloadingGrpc.OffloadingImplBase {
 
-		@Override 
+		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
+			System.out.println("receive offloading request");
 			EdgeServer s = new EdgeServer();
 			OffloadingReply reply = OffloadingReply.newBuilder()
-				.setMessage("I am your father! \\\\(* W *)//")
-				.build();
+					.setMessage("I am your father! \\\\(* W *)//")
+					.build();
 
 			Runtime rt = Runtime.getRuntime();
 			try {
 				// pull the container image
-				String command = "docker pull bhu2017/facerec:1.0";
+				//String command = "docker pull bhu2017/facerec:1.0";
+				String command = "docker pull ruili92/speech";
 				System.out.println("pull the container");
 				Process pr = rt.exec(command);
+				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+				String inputLine;
+				while((inputLine = in.readLine()) != null) {
+					System.out.println(inputLine);
+					}
+				in.close();
+				System.out.println("Input end");
 			} catch (IOException e) {
 				Thread.currentThread().interrupt();
 			}
@@ -87,7 +96,7 @@ public class EdgeServer {
 			Thread t = s.new faceThread();
 			t.start();
 			System.out.println("Check face recognition container");
-			while(!containerReady("facial_container")) {
+			while(!containerReady("speech_container")) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(100);
 				} catch (InterruptedException e) {
@@ -115,8 +124,8 @@ public class EdgeServer {
 				String debug;
 				while((debug = in.readLine()) != null) {
 					if(debug.equals("true"))
-						System.out.println("Face recognition container is ready to serve!");
-						return true;
+						System.out.println(name + " is ready to serve!");
+					return true;
 				}
 				return false;
 			} catch (IOException e) {
@@ -129,10 +138,17 @@ public class EdgeServer {
 		public void run() {
 			Runtime rt = Runtime.getRuntime();
 			try {
-			// start to run the container
-				String command = "docker run -p 50052:50052 --name facial_container bhu2017/facerec";
-
+				// start to run the container
+				//String command = "docker run -p 50052:50052 --name facial_container bhu2017/facerec";
+				String command = "docker run -p 50052:50052 --name speech_container ruili92/speech";
 				Process pr = rt.exec(command);
+				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+				String inputLine;
+				while((inputLine = in.readLine()) != null) {
+					System.out.println(inputLine);
+				}
+				in.close();
+				System.out.println("Input end");
 				System.out.println("start the container");
 			} catch (IOException e) {
 				Thread.currentThread().interrupt();
