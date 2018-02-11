@@ -3,10 +3,17 @@
  */
 package edgeServer;
 
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.lang.Runtime;
 import java.lang.Process;
@@ -20,8 +27,10 @@ import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
 public class EdgeServer {
 	private static final Logger logger = Logger.getLogger(EdgeServer.class.getName());
-
+	private static final Map<String, Integer> IMAGEPOP = new HashMap<>();  // appId, app hit times
+	private static final Map<String, Map<String, Double>> RATEMAP = new HashMap<>(); // appId, machineId, rate
 	private Server server;
+
 	private void start() throws IOException {
 		/* The port on which the server should run */
 		int port = 50051;
@@ -61,6 +70,10 @@ public class EdgeServer {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		final EdgeServer server = new EdgeServer();
+		//Thread receiver = new Thread(new Receiver());
+		//receiver.start();
+		//Thread sender = new Thread(new Sender());
+		//sender.start();
 		server.start();
 		server.blockUntilShutdown();
 	}
@@ -69,45 +82,70 @@ public class EdgeServer {
 
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
-			System.out.println("receive offloading request");
+			// first, make the scheduling decision
+			String appId = req.getMessage();
+			System.out.println("appId: " + appId);
+			try {
+				String ip = InetAddress.getLocalHost().toString();
+				System.out.println("ip: " + ip);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			Map<String, Double> scheduleMeta = RATEMAP.get(appId);
+			if (scheduleMeta == null) {
+				// this appId is new to the neighborhood, so run it locally
+
+			} else {
+
+			}
+
+
+
+			String reqMessage = req.getMessage();
+			if (IMAGEPOP.containsKey(reqMessage)) {
+				// edge server already has the requested docker image
+				IMAGEPOP.put(reqMessage, IMAGEPOP.get(reqMessage) + 1);
+			} else {
+				// edge server needs to download the docker image on demand
+				IMAGEPOP.put(reqMessage, 1);
+				Runtime rt = Runtime.getRuntime();
+				try {
+					String command = "docker pull " + reqMessage;
+					System.out.println("pull the container " + reqMessage);
+					Process pr = rt.exec(command);
+					BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+					String inputLine;
+					while((inputLine = in.readLine()) != null) {
+						System.out.println(inputLine);
+					}
+					in.close();
+				} catch (IOException e) {
+					Thread.currentThread().interrupt();
+				}
+			}
+			System.out.println("[DEBUG] request: " + reqMessage +", times: " + IMAGEPOP.get(reqMessage));
+
 			EdgeServer s = new EdgeServer();
 			OffloadingReply reply = OffloadingReply.newBuilder()
 					.setMessage("I am your father! \\\\(* W *)//")
 					.build();
-
-			Runtime rt = Runtime.getRuntime();
-			try {
-				// pull the container image
-				//String command = "docker pull bhu2017/facerec:1.0";
-				String command = "docker pull ruili92/speech";
-				System.out.println("pull the container");
-				Process pr = rt.exec(command);
-				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-				String inputLine;
-				while((inputLine = in.readLine()) != null) {
-					System.out.println(inputLine);
-					}
-				in.close();
-				System.out.println("Input end");
-			} catch (IOException e) {
-				Thread.currentThread().interrupt();
-			}
-
-			Thread t = s.new faceThread();
+			Thread t = s.new offloadThread(reqMessage);
 			t.start();
-			System.out.println("Check face recognition container");
-			while(!containerReady("speech_container")) {
+			System.out.println("Check " + reqMessage + " container");
+			while(!containerReady(reqMessage.split("/")[1])) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(100);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 				}
 			}
+			/*
 			try {
 				TimeUnit.MILLISECONDS.sleep(10000);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
+			*/
 			responseObserver.onNext(reply);
 			responseObserver.onCompleted();
 		}
@@ -134,13 +172,17 @@ public class EdgeServer {
 		}
 	}
 
-	public class faceThread extends Thread {
+	public class offloadThread extends Thread {
+		String dockerName;
+		public offloadThread(String dockerName) {
+			this.dockerName = dockerName;
+		}
+
 		public void run() {
 			Runtime rt = Runtime.getRuntime();
 			try {
-				// start to run the container
-				//String command = "docker run -p 50052:50052 --name facial_container bhu2017/facerec";
-				String command = "docker run -p 50052:50052 --name speech_container ruili92/speech";
+				String command = "docker run -p 50052:50052 --name " + dockerName.split("/")[1] + "  " + dockerName;
+				System.out.println("[DEBUG] command: " + command);
 				Process pr = rt.exec(command);
 				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String inputLine;
