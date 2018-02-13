@@ -10,10 +10,7 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import java.lang.Runtime;
 import java.lang.Process;
@@ -30,15 +27,24 @@ public class EdgeServer {
 	private static final Map<String, Integer> IMAGEPOP = new HashMap<>();  // appId, app hit times
 	private static final Map<String, Map<String, Double>> RATEMAP = new HashMap<>(); // appId, machineId, rate
 	private Server server;
+	private Server dockerServer;
+	private static String LOCALIP; // localhost's ip address
 
 	private void start() throws IOException {
+		LOCALIP = InetAddress.getLocalHost().toString().split("/")[1];
 		/* The port on which the server should run */
 		int port = 50051;
 		server = ServerBuilder.forPort(port)
 				.addService(new OffloadingImpl())
 				.build()
 				.start();
+		dockerServer = ServerBuilder.forPort(60051)
+				.addService(new PrepareDockerImpl())
+				.build()
+				.start();
+
 		logger.info("Server started, listening on " + port);
+		logger.info("dockerServer started, listening on 60051");
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
@@ -54,6 +60,9 @@ public class EdgeServer {
 		if (server != null) {
 			server.shutdown();
 		}
+		if (dockerServer != null) {
+			dockerServer.shutdown();
+		}
 	}
 
 	/**
@@ -62,6 +71,9 @@ public class EdgeServer {
 	private void blockUntilShutdown() throws InterruptedException {
 		if (server != null) {
 			server.awaitTermination();
+		}
+		if (dockerServer != null) {
+			dockerServer.awaitTermination();
 		}
 	}
 
@@ -78,30 +90,13 @@ public class EdgeServer {
 		server.blockUntilShutdown();
 	}
 
-	static class OffloadingImpl extends OffloadingGrpc.OffloadingImplBase {
+	static class PrepareDockerImpl extends OffloadingGrpc.OffloadingImplBase {
 
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
-			// first, make the scheduling decision
-			String appId = req.getMessage();
-			System.out.println("appId: " + appId);
-			try {
-				String ip = InetAddress.getLocalHost().toString();
-				System.out.println("ip: " + ip);
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-			Map<String, Double> scheduleMeta = RATEMAP.get(appId);
-			if (scheduleMeta == null) {
-				// this appId is new to the neighborhood, so run it locally
-
-			} else {
-
-			}
-
-
-
-			String reqMessage = req.getMessage();
+			int appPort = Integer.parseInt(req.getMessage().split(":")[0]);
+			String reqMessage = req.getMessage().split(":")[1];
+			System.out.println("[Rui] appPortt: " + appPort + ", reqMessage: " + reqMessage);
 			if (IMAGEPOP.containsKey(reqMessage)) {
 				// edge server already has the requested docker image
 				IMAGEPOP.put(reqMessage, IMAGEPOP.get(reqMessage) + 1);
@@ -123,15 +118,13 @@ public class EdgeServer {
 					Thread.currentThread().interrupt();
 				}
 			}
-			System.out.println("[DEBUG] request: " + reqMessage +", times: " + IMAGEPOP.get(reqMessage));
 
 			EdgeServer s = new EdgeServer();
 			OffloadingReply reply = OffloadingReply.newBuilder()
-					.setMessage("I am your father! \\\\(* W *)//")
+					.setMessage("well prepared")
 					.build();
-			Thread t = s.new offloadThread(reqMessage);
+			Thread t = s.new offloadThread(reqMessage, appPort);
 			t.start();
-			System.out.println("Check " + reqMessage + " container");
 			while(!containerReady(reqMessage.split("/")[1])) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(100);
@@ -139,13 +132,6 @@ public class EdgeServer {
 					Thread.currentThread().interrupt();
 				}
 			}
-			/*
-			try {
-				TimeUnit.MILLISECONDS.sleep(10000);
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-			*/
 			responseObserver.onNext(reply);
 			responseObserver.onCompleted();
 		}
@@ -172,24 +158,59 @@ public class EdgeServer {
 		}
 	}
 
+	static class OffloadingImpl extends OffloadingGrpc.OffloadingImplBase {
+		@Override
+		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
+			String handshake = req.getMessage().split(":")[0];
+			String reqMessage = req.getMessage().split(":")[1];
+			System.out.println("req: " + req +", handshake: " + handshake + ", reqMessage: " + reqMessage);
+			String destinationIP = null;
+				// first, make the scheduling decision
+				Map<String, Double> scheduleMeta = RATEMAP.get(reqMessage);
+				if (scheduleMeta == null) {
+					// this appId is new to the neighborhood, so run it locally
+					destinationIP = LOCALIP;
+				} else {
+					double maxValue = 0;
+					for (final Map.Entry<String, Double> iter : scheduleMeta.entrySet()) {
+						if (iter.getValue() > maxValue) {
+							maxValue = iter.getValue();
+							destinationIP = iter.getKey();
+						}
+					}
+				}
+				OffloadingReply reply = OffloadingReply.newBuilder()
+						.setMessage(destinationIP)
+						.build();
+				responseObserver.onNext(reply);
+				responseObserver.onCompleted();
+		}
+	}
+
 	public class offloadThread extends Thread {
 		String dockerName;
-		public offloadThread(String dockerName) {
+		int dockerPort;
+
+		public offloadThread(String dockerName, int dockerPort) {
 			this.dockerName = dockerName;
+			this.dockerPort = dockerPort;
 		}
 
 		public void run() {
 			Runtime rt = Runtime.getRuntime();
 			try {
-				String command = "docker run -p 50052:50052 --name " + dockerName.split("/")[1] + "  " + dockerName;
+				String port = Integer.toString(dockerPort) + ":" + Integer.toString(50052);
+				String command = "docker run -p " + port + " --name " + dockerName.split("/")[1] + Integer.toString(dockerPort) + "  " + dockerName;
 				System.out.println("[DEBUG] command: " + command);
 				Process pr = rt.exec(command);
+				/*
 				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String inputLine;
 				while((inputLine = in.readLine()) != null) {
 					System.out.println(inputLine);
 				}
 				in.close();
+				*/
 				System.out.println("Input end");
 				System.out.println("start the container");
 			} catch (IOException e) {
