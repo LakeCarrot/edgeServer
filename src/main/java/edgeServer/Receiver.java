@@ -14,6 +14,9 @@ import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
 public class Receiver implements Runnable {
   static Map<Integer, Double> appFilteredRate = new HashMap<>();
+  static double rate1 = 0;
+  static double rate2 = 0;
+
   public void run() {
     int port = 50050;
     try {
@@ -21,7 +24,7 @@ public class Receiver implements Runnable {
           .addService(new ReceiverImpl())
           .build()
           .start();
-      System.out.println("receiver started, listening on " + port);
+      //System.out.println("receiver started, listening on " + port);
       Runtime.getRuntime().addShutdownHook(new Thread() {
         @Override
         public void run() {
@@ -42,16 +45,22 @@ public class Receiver implements Runnable {
       int appId = Integer.parseInt(reqMessage.split(":")[0]);
       double rawRte = Double.parseDouble(reqMessage.split(":")[1]);
       double filteredRate = 0;
+      double prevRate = 0;
+      //System.out.println("rawRte: " + rawRte + ", appId: " + appId + ", appFilteredRate: " + appFilteredRate);
       if (appFilteredRate.containsKey(appId)) {
-        filteredRate = 0.8 * appFilteredRate.get(appId) + 0.2 * rawRte;
+        prevRate = appFilteredRate.get(appId);
+        filteredRate = 0.8 * prevRate +0.2 * rawRte;
         appFilteredRate.put(appId, filteredRate);
+        long time = System.currentTimeMillis();
+        System.out.println("RuiLog : " + time + " : " + appId + " : " + rawRte);
+        //System.out.println("RuiLog : " + time + " : " + appId + " : " + filteredRate);
       } else {
         filteredRate = rawRte;
-        appFilteredRate.put(appId, rawRte);
+        long time = System.currentTimeMillis();
+        System.out.println("RuiLog : " + time + " : " + appId + " : " + "-2");
+        appFilteredRate.put(appId, filteredRate);
       }
-      //double rawRate = Double.parseDouble(reqMessage.split(":")[2]);
-      long time = System.currentTimeMillis();
-      System.out.println(time + " : " + appId + " : " + filteredRate);
+
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();

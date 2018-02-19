@@ -30,6 +30,7 @@ public class EdgeServer {
 	private Server dockerServer;
 	private Server cleanDocker;
 	private static String LOCALIP; // localhost's ip address
+	private static int appCount = 0;
 
 	private void start() throws IOException {
 		LOCALIP = InetAddress.getLocalHost().toString().split("/")[1];
@@ -107,13 +108,18 @@ public class EdgeServer {
 				Thread.sleep(10000);
 				command = "docker rm " + containerID;
 				pr = rt.exec(command);
+
+				long time = System.currentTimeMillis();
+				System.out.println("RuiLog : " + time + " : " + -1 + " : " + -1);
 				System.out.println("remove the container " + containerID);
+
 				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String inputLine;
 				while((inputLine = in.readLine()) != null) {
 					System.out.println(inputLine);
 				}
 				in.close();
+
 			} catch (Exception e) {
 				Thread.currentThread().interrupt();
 			}
@@ -132,30 +138,6 @@ public class EdgeServer {
 			int appPort = Integer.parseInt(req.getMessage().split(":")[0]);
 			String reqMessage = req.getMessage().split(":")[1];
 			System.out.println("[Rui] appPortt: " + appPort + ", reqMessage: " + reqMessage);
-			/*
-			if (IMAGEPOP.containsKey(reqMessage)) {
-				// edge server already has the requested docker image
-				IMAGEPOP.put(reqMessage, IMAGEPOP.get(reqMessage) + 1);
-			} else {
-				// edge server needs to download the docker image on demand
-				IMAGEPOP.put(reqMessage, 1);
-				Runtime rt = Runtime.getRuntime();
-				try {
-					String command = "docker pull " + reqMessage;
-					System.out.println("pull the container " + reqMessage);
-					Process pr = rt.exec(command);
-					BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-					String inputLine;
-					while((inputLine = in.readLine()) != null) {
-						System.out.println(inputLine);
-					}
-					in.close();
-				} catch (IOException e) {
-					Thread.currentThread().interrupt();
-				}
-			}
-			*/
-
 			EdgeServer s = new EdgeServer();
 			OffloadingReply reply = OffloadingReply.newBuilder()
 					.setMessage("well prepared")
@@ -202,22 +184,39 @@ public class EdgeServer {
 			String reqMessage = req.getMessage().split(":")[1];
 			System.out.println("req: " + req +", handshake: " + handshake + ", reqMessage: " + reqMessage);
 			String destinationIP = null;
-				// first, make the scheduling decision
-				Map<String, Double> scheduleMeta = RATEMAP.get(reqMessage);
-				if (scheduleMeta == null) {
-					// this appId is new to the neighborhood, so run it locally
-					destinationIP = LOCALIP;
-				} else {
-					double maxValue = 0;
-					for (final Map.Entry<String, Double> iter : scheduleMeta.entrySet()) {
-						if (iter.getValue() > maxValue) {
-							maxValue = iter.getValue();
-							destinationIP = iter.getKey();
-						}
+			appCount++;
+			if (appCount == 1)
+				destinationIP = "172.28.142.176";
+			else if (appCount == 2)
+				destinationIP = "172.28.142.176";
+			else if (appCount == 3)
+				destinationIP = "172.28.143.136";
+			else if (appCount == 4)
+				destinationIP = "172.28.143.136";
+			else if (appCount == 5)
+				destinationIP = "172.28.143.136";
+			else
+				destinationIP = "172.28.142.176";
+			/*
+			// first, make the scheduling decision
+			Map<String, Double> scheduleMeta = RATEMAP.get(reqMessage);
+			if (scheduleMeta == null) {
+				// this appId is new to the neighborhood, so run it locally
+				destinationIP = LOCALIP;
+			} else {
+				double maxValue = 0;
+				for (final Map.Entry<String, Double> iter : scheduleMeta.entrySet()) {
+					if (iter.getValue() > maxValue) {
+						maxValue = iter.getValue();
+						destinationIP = iter.getKey();
 					}
 				}
+			}
+			*/
+
+
 				OffloadingReply reply = OffloadingReply.newBuilder()
-						.setMessage(LOCALIP)
+						.setMessage(destinationIP)
 						.build();
 				responseObserver.onNext(reply);
 				responseObserver.onCompleted();
@@ -241,12 +240,14 @@ public class EdgeServer {
 				System.out.println("[DEBUG] command: " + command);
 				Process pr = rt.exec(command);
 
+				/*
 				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String inputLine;
 				while((inputLine = in.readLine()) != null) {
 					System.out.println(inputLine);
 				}
 				in.close();
+				*/
 
 				System.out.println("Input end");
 				System.out.println("start the container");
