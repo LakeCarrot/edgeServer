@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b723faf3-59b8-417c-b713-d3f9a7e14870" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -21,26 +23,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="750">
-      <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="968">
-              <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+            <state relative-caret-position="1145">
+              <caret line="52" column="45" lean-forward="false" selection-start-line="52" selection-start-column="45" selection-end-line="52" selection-end-column="45" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EdgeServer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1761">
-              <caret line="78" column="0" lean-forward="true" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#7160#0" expanded="true" />
-                <element signature="imports" expanded="true" />
-                <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -48,10 +36,25 @@
       <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Sender.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="484">
+              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EdgeServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="704">
+              <caret line="106" column="28" lean-forward="true" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#8371#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1818#2123#0" expanded="true" />
+                <element signature="e#2122#2123#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -544,9 +547,9 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/proto/offloading.proto" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" />
         <option value="$PROJECT_DIR$/src/main/java/edgeServer/Sender.java" />
         <option value="$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" />
       </list>
     </option>
   </component>
@@ -579,9 +582,8 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -626,6 +628,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -756,12 +759,13 @@
       <workItem from="1518117170636" duration="8459000" />
       <workItem from="1518294322217" duration="1378000" />
       <workItem from="1518299529586" duration="1797000" />
-      <workItem from="1518318499686" duration="16289000" />
+      <workItem from="1518318499686" duration="20038000" />
+      <workItem from="1518713939323" duration="18259000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45377000" />
+    <option name="totallyTimeSpent" value="67385000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-16" y="-16" width="3872" height="2092" extended-state="6" />
@@ -812,14 +816,33 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="792">
+          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -846,11 +869,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#640#954#0" expanded="false" />
-            <element signature="e#953#954#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -859,9 +878,10 @@
         <state relative-caret-position="1804">
           <caret line="62" column="9" lean-forward="false" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -878,11 +898,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#640#954#0" expanded="false" />
-            <element signature="e#953#954#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -901,9 +917,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -930,11 +947,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#640#954#0" expanded="false" />
-            <element signature="e#953#954#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -943,9 +956,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1017,9 +1031,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1036,9 +1051,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1055,9 +1071,10 @@
         <state relative-caret-position="616">
           <caret line="16" column="36" lean-forward="false" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="36" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1081,9 +1098,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7160#0" expanded="true" />
+            <element signature="e#0#8371#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1159,31 +1177,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state relative-caret-position="484">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="106" column="28" lean-forward="true" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#8371#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1818#2123#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="968">
-          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state relative-caret-position="1145">
+          <caret line="52" column="45" lean-forward="false" selection-start-line="52" selection-start-column="45" selection-end-line="52" selection-end-column="45" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1761">
-          <caret line="78" column="0" lean-forward="true" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#7160#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-            <element signature="class#OffloadingImpl#0;class#EdgeServer#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>

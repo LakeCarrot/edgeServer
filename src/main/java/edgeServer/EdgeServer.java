@@ -28,6 +28,7 @@ public class EdgeServer {
 	private static final Map<String, Map<String, Double>> RATEMAP = new HashMap<>(); // appId, machineId, rate
 	private Server server;
 	private Server dockerServer;
+	private Server cleanDocker;
 	private static String LOCALIP; // localhost's ip address
 
 	private void start() throws IOException {
@@ -40,6 +41,10 @@ public class EdgeServer {
 				.start();
 		dockerServer = ServerBuilder.forPort(60051)
 				.addService(new PrepareDockerImpl())
+				.build()
+				.start();
+		cleanDocker = ServerBuilder.forPort(60052)
+				.addService(new CleanDockerImpl())
 				.build()
 				.start();
 
@@ -82,12 +87,42 @@ public class EdgeServer {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		final EdgeServer server = new EdgeServer();
-		//Thread receiver = new Thread(new Receiver());
-		//receiver.start();
+		Thread receiver = new Thread(new Receiver());
+		receiver.start();
 		//Thread sender = new Thread(new Sender());
 		//sender.start();
 		server.start();
 		server.blockUntilShutdown();
+	}
+
+	static class CleanDockerImpl extends OffloadingGrpc.OffloadingImplBase {
+		@Override
+		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
+			String containerID = req.getMessage();
+			Runtime rt = Runtime.getRuntime();
+			try {
+				String command = "docker stop " + containerID;
+				Process pr = rt.exec(command);
+				System.out.println("stop the container " + containerID);
+				Thread.sleep(10000);
+				command = "docker rm " + containerID;
+				pr = rt.exec(command);
+				System.out.println("remove the container " + containerID);
+				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+				String inputLine;
+				while((inputLine = in.readLine()) != null) {
+					System.out.println(inputLine);
+				}
+				in.close();
+			} catch (Exception e) {
+				Thread.currentThread().interrupt();
+			}
+			OffloadingReply reply = OffloadingReply.newBuilder()
+					.setMessage("successfully stop the " + containerID)
+					.build();
+			responseObserver.onNext(reply);
+			responseObserver.onCompleted();
+		}
 	}
 
 	static class PrepareDockerImpl extends OffloadingGrpc.OffloadingImplBase {
@@ -97,6 +132,7 @@ public class EdgeServer {
 			int appPort = Integer.parseInt(req.getMessage().split(":")[0]);
 			String reqMessage = req.getMessage().split(":")[1];
 			System.out.println("[Rui] appPortt: " + appPort + ", reqMessage: " + reqMessage);
+			/*
 			if (IMAGEPOP.containsKey(reqMessage)) {
 				// edge server already has the requested docker image
 				IMAGEPOP.put(reqMessage, IMAGEPOP.get(reqMessage) + 1);
@@ -118,6 +154,7 @@ public class EdgeServer {
 					Thread.currentThread().interrupt();
 				}
 			}
+			*/
 
 			EdgeServer s = new EdgeServer();
 			OffloadingReply reply = OffloadingReply.newBuilder()
@@ -180,7 +217,7 @@ public class EdgeServer {
 					}
 				}
 				OffloadingReply reply = OffloadingReply.newBuilder()
-						.setMessage(destinationIP)
+						.setMessage(LOCALIP)
 						.build();
 				responseObserver.onNext(reply);
 				responseObserver.onCompleted();
@@ -199,22 +236,22 @@ public class EdgeServer {
 		public void run() {
 			Runtime rt = Runtime.getRuntime();
 			try {
-				String port = Integer.toString(dockerPort) + ":" + Integer.toString(50052);
-				String command = "docker run -p " + port + " --name " + dockerName.split("/")[1] + Integer.toString(dockerPort) + "  " + dockerName;
+				String address = Integer.toString(dockerPort) + ":" + Integer.toString(50052);
+				String command = "docker run -p " + address + " --name " + dockerName.split("/")[1] + Integer.toString(dockerPort) + "  " + dockerName;
 				System.out.println("[DEBUG] command: " + command);
 				Process pr = rt.exec(command);
-				/*
+
 				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String inputLine;
 				while((inputLine = in.readLine()) != null) {
 					System.out.println(inputLine);
 				}
 				in.close();
-				*/
+
 				System.out.println("Input end");
 				System.out.println("start the container");
 			} catch (IOException e) {
-				Thread.currentThread().interrupt();
+				new Exception().printStackTrace();
 			}
 		}
 	}
