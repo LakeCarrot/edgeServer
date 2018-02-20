@@ -31,6 +31,7 @@ public class EdgeServer {
 	private Server cleanDocker;
 	private static String LOCALIP; // localhost's ip address
 	private static int appCount = 0;
+	private static Receiver receiver;
 
 	private void start() throws IOException {
 		LOCALIP = InetAddress.getLocalHost().toString().split("/")[1];
@@ -88,8 +89,9 @@ public class EdgeServer {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		final EdgeServer server = new EdgeServer();
-		Thread receiver = new Thread(new Receiver());
-		receiver.start();
+		receiver = new Receiver();
+		Thread receiverThread = new Thread(receiver);
+		receiverThread.start();
 		//Thread sender = new Thread(new Sender());
 		//sender.start();
 		server.start();
@@ -180,46 +182,40 @@ public class EdgeServer {
 	static class OffloadingImpl extends OffloadingGrpc.OffloadingImplBase {
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
-			String handshake = req.getMessage().split(":")[0];
-			String reqMessage = req.getMessage().split(":")[1];
-			System.out.println("req: " + req +", handshake: " + handshake + ", reqMessage: " + reqMessage);
+			String appType = req.getMessage();
 			String destinationIP = null;
-			appCount++;
-			if (appCount == 1)
-				destinationIP = "172.28.142.176";
-			else if (appCount == 2)
-				destinationIP = "172.28.142.176";
-			else if (appCount == 3)
-				destinationIP = "172.28.143.136";
-			else if (appCount == 4)
-				destinationIP = "172.28.143.136";
-			else if (appCount == 5)
-				destinationIP = "172.28.143.136";
-			else
-				destinationIP = "172.28.142.176";
+			try {
+				destinationIP = receiver.getAppRate(appType);
+			} catch (Exception e) {
+				new Exception().printStackTrace();
+			}
+			System.out.println("destinationIP: " + destinationIP);
 			/*
-			// first, make the scheduling decision
-			Map<String, Double> scheduleMeta = RATEMAP.get(reqMessage);
-			if (scheduleMeta == null) {
-				// this appId is new to the neighborhood, so run it locally
-				destinationIP = LOCALIP;
+			if (false) {
+				appCount++;
+				if (appCount == 1)
+					destinationIP = "172.28.142.176";
+				else if (appCount == 2)
+					destinationIP = "172.28.142.176";
+				else if (appCount == 3)
+					destinationIP = "172.28.143.136";
+				else if (appCount == 4)
+					destinationIP = "172.28.143.136";
+				else if (appCount == 5)
+					destinationIP = "172.28.143.136";
+				else
+					destinationIP = "172.28.142.176";
+
+				System.out.println("appCount: " + appCount + ", destinationIP: " + destinationIP);
 			} else {
-				double maxValue = 0;
-				for (final Map.Entry<String, Double> iter : scheduleMeta.entrySet()) {
-					if (iter.getValue() > maxValue) {
-						maxValue = iter.getValue();
-						destinationIP = iter.getKey();
-					}
-				}
+				destinationIP = "172.28.142.176";
 			}
 			*/
-
-
-				OffloadingReply reply = OffloadingReply.newBuilder()
-						.setMessage(destinationIP)
-						.build();
-				responseObserver.onNext(reply);
-				responseObserver.onCompleted();
+			OffloadingReply reply = OffloadingReply.newBuilder()
+					.setMessage(destinationIP)
+					.build();
+			responseObserver.onNext(reply);
+			responseObserver.onCompleted();
 		}
 	}
 

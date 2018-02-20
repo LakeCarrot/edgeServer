@@ -5,6 +5,7 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import edgeOffloading.OffloadingOuterClass.OffloadingRequest;
 import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
 public class Receiver implements Runnable {
-  static Map<Integer, Double> appFilteredRate = new HashMap<>();
+  static Map<String, Map<String, Double>> appRate = new HashMap<>(); // appType, hostId, filteredRate
   static double rate1 = 0;
   static double rate2 = 0;
 
@@ -38,29 +39,57 @@ public class Receiver implements Runnable {
     }
   }
 
+  public String getAppRate(String appType) throws Exception {
+    Map<String, Double> rateMeta = appRate.get(appType);
+    String destination = null;
+    if (rateMeta != null) {
+      double maxRate = 0;
+      for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
+        if (entry.getValue() > maxRate) {
+          maxRate = entry.getValue();
+          destination = entry.getKey();
+        }
+      }
+    } else {
+      destination = InetAddress.getLocalHost().toString().split("/")[1];
+    }
+
+    return destination;
+  }
+
   static class ReceiverImpl extends OffloadingGrpc.OffloadingImplBase {
     @Override
     public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
       String reqMessage = req.getMessage();
-      int appId = Integer.parseInt(reqMessage.split(":")[0]);
-      double rawRte = Double.parseDouble(reqMessage.split(":")[1]);
+      String host = reqMessage.split(":")[0];
+      String appType = reqMessage.split(":")[1];
+      double rawRte = Double.parseDouble(reqMessage.split(":")[2]);
       double filteredRate = 0;
       double prevRate = 0;
-      //System.out.println("rawRte: " + rawRte + ", appId: " + appId + ", appFilteredRate: " + appFilteredRate);
-      if (appFilteredRate.containsKey(appId)) {
-        prevRate = appFilteredRate.get(appId);
-        filteredRate = 0.8 * prevRate +0.2 * rawRte;
-        appFilteredRate.put(appId, filteredRate);
-        long time = System.currentTimeMillis();
-        System.out.println("RuiLog : " + time + " : " + appId + " : " + rawRte);
-        //System.out.println("RuiLog : " + time + " : " + appId + " : " + filteredRate);
+      Map<String, Double> rateMeta = appRate.get(appType);
+      if (rateMeta != null) {
+        if (rateMeta.containsKey(host)) {
+          System.out.println("old " + appType + " on " + host);
+          prevRate = rateMeta.get(host);
+          filteredRate = 0.7 * prevRate + 0.3 * rawRte;
+          rateMeta.put(host, filteredRate);
+        } else {
+          // first app on this host
+          System.out.println("first " + appType + " on " + host);
+          filteredRate = rawRte;
+          rateMeta.put(host, rawRte);
+        }
       } else {
+        // first app in the system
+        System.out.println("first " + appType + " in the system");
         filteredRate = rawRte;
-        long time = System.currentTimeMillis();
-        System.out.println("RuiLog : " + time + " : " + appId + " : " + "-2");
-        appFilteredRate.put(appId, filteredRate);
+        rateMeta = new HashMap<>();
+        rateMeta.put(host, rawRte);
+        appRate.put(appType, rateMeta);
       }
-
+      long time = System.currentTimeMillis();
+      System.out.println("RuiLog : " + time + " : " + host + " : " + appType + " : " + filteredRate);
+      System.out.println("rawRte: " + rawRte + ", filteredRate: " + filteredRate);
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
