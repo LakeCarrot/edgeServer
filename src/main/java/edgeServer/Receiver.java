@@ -94,7 +94,7 @@ public class Receiver implements Runnable {
         if (rateMeta.containsKey(host)) {
           //System.out.println("old " + appType + " on " + host);
           prevRate = rateMeta.get(host);
-          filteredRate = 0.5 * prevRate + 0.5 * rawRte;
+          filteredRate = 0 * prevRate + 1 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
           // first app on this host
@@ -113,7 +113,6 @@ public class Receiver implements Runnable {
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate);
-      //System.out.println("rawRte: " + rawRte + ", filteredRate: " + filteredRate);
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
