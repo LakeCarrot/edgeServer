@@ -185,32 +185,11 @@ public class EdgeServer {
 			String appType = req.getMessage();
 			String destinationIP = null;
 			try {
-				destinationIP = receiver.getAppRate(appType);
+				destinationIP = receiver.getAppDest(appType);
 			} catch (Exception e) {
 				new Exception().printStackTrace();
 			}
 			System.out.println("destinationIP: " + destinationIP);
-			/*
-			if (false) {
-				appCount++;
-				if (appCount == 1)
-					destinationIP = "172.28.142.176";
-				else if (appCount == 2)
-					destinationIP = "172.28.142.176";
-				else if (appCount == 3)
-					destinationIP = "172.28.143.136";
-				else if (appCount == 4)
-					destinationIP = "172.28.143.136";
-				else if (appCount == 5)
-					destinationIP = "172.28.143.136";
-				else
-					destinationIP = "172.28.142.176";
-
-				System.out.println("appCount: " + appCount + ", destinationIP: " + destinationIP);
-			} else {
-				destinationIP = "172.28.142.176";
-			}
-			*/
 			OffloadingReply reply = OffloadingReply.newBuilder()
 					.setMessage(destinationIP)
 					.build();
@@ -235,16 +214,6 @@ public class EdgeServer {
 				String command = "docker run -p " + address + " --name " + dockerName.split("/")[1] + Integer.toString(dockerPort) + "  " + dockerName;
 				System.out.println("[DEBUG] command: " + command);
 				Process pr = rt.exec(command);
-
-				/*
-				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-				String inputLine;
-				while((inputLine = in.readLine()) != null) {
-					System.out.println(inputLine);
-				}
-				in.close();
-				*/
-
 				System.out.println("Input end");
 				System.out.println("start the container");
 			} catch (IOException e) {

@@ -39,7 +39,21 @@ public class Receiver implements Runnable {
     }
   }
 
-  public String getAppRate(String appType) throws Exception {
+  public static String hostTranslation(String host) {
+    String hostName = "unknown";
+    if (host.equals("172.28.142.176"))
+      hostName = "slave1";
+    else if (host.equals("172.28.140.65"))
+      hostName = "slave2";
+    else if (host.equals("172.28.142.226"))
+      hostName = "slave3";
+    else if (host.equals("172.28.143.136"))
+      hostName = "master";
+
+    return hostName;
+  }
+
+  public String getAppDest(String appType) throws Exception {
     Map<String, Double> rateMeta = appRate.get(appType);
     String destination = null;
     if (rateMeta != null) {
@@ -53,6 +67,15 @@ public class Receiver implements Runnable {
     } else {
       destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
+
+    System.out.println("*****************************************");
+    System.out.println("*****************************************");
+    System.out.println("*****************************************");
+    System.out.println("[RuiSchedule] appType: " + appType + ", hostName: " + hostTranslation(destination));
+    System.out.println("[RuiSchedule] appRate: " + appRate);
+    System.out.println("*****************************************");
+    System.out.println("*****************************************");
+    System.out.println("*****************************************");
 
     return destination;
   }
@@ -69,27 +92,28 @@ public class Receiver implements Runnable {
       Map<String, Double> rateMeta = appRate.get(appType);
       if (rateMeta != null) {
         if (rateMeta.containsKey(host)) {
-          System.out.println("old " + appType + " on " + host);
+          //System.out.println("old " + appType + " on " + host);
           prevRate = rateMeta.get(host);
           filteredRate = 0.7 * prevRate + 0.3 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
           // first app on this host
-          System.out.println("first " + appType + " on " + host);
+          //System.out.println("first " + appType + " on " + host);
           filteredRate = rawRte;
           rateMeta.put(host, rawRte);
         }
       } else {
         // first app in the system
-        System.out.println("first " + appType + " in the system");
+        //System.out.println("first " + appType + " in the system");
         filteredRate = rawRte;
         rateMeta = new HashMap<>();
         rateMeta.put(host, rawRte);
         appRate.put(appType, rateMeta);
       }
       long time = System.currentTimeMillis();
-      System.out.println("RuiLog : " + time + " : " + host + " : " + appType + " : " + filteredRate);
-      System.out.println("rawRte: " + rawRte + ", filteredRate: " + filteredRate);
+      String hostName = hostTranslation(host);
+      System.out.println("RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate);
+      //System.out.println("rawRte: " + rawRte + ", filteredRate: " + filteredRate);
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
