@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b723faf3-59b8-417c-b713-d3f9a7e14870" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -26,7 +27,7 @@
           <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Sender.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="484">
+                <state relative-caret-position="132">
                   <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -39,12 +40,10 @@
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="572">
-                  <caret line="187" column="46" lean-forward="true" selection-start-line="187" selection-start-column="46" selection-end-line="187" selection-end-column="46" />
+                  <caret line="187" column="46" lean-forward="false" selection-start-line="187" selection-start-column="46" selection-end-line="187" selection-end-column="46" />
                   <folding>
                     <element signature="e#0#7124#0" expanded="true" />
                     <element signature="imports" expanded="true" />
-                    <element signature="e#1887#2192#0" expanded="true" />
-                    <element signature="e#2191#2192#0" expanded="true" />
                     <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
                   </folding>
                 </state>
@@ -54,13 +53,16 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="750">
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="925">
-                  <caret line="70" column="51" lean-forward="false" selection-start-line="70" selection-start-column="51" selection-end-line="70" selection-end-column="51" />
-                  <folding />
+                <state relative-caret-position="1188">
+                  <caret line="50" column="26" lean-forward="true" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+                  <folding>
+                    <element signature="e#877#1191#0" expanded="true" />
+                    <element signature="e#1190#1191#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -770,12 +772,13 @@
       <workItem from="1518294322217" duration="1378000" />
       <workItem from="1518299529586" duration="1797000" />
       <workItem from="1518318499686" duration="20038000" />
-      <workItem from="1518713939323" duration="49845000" />
+      <workItem from="1518713939323" duration="50198000" />
+      <workItem from="1519248572950" duration="118000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98971000" />
+    <option name="totallyTimeSpent" value="99442000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-16" y="-16" width="3872" height="2092" extended-state="6" />
@@ -862,11 +865,47 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Sender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7392">
+          <caret line="187" column="46" lean-forward="true" selection-start-line="187" selection-start-column="46" selection-end-line="187" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#7124#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#877#1191#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#877#1191#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -887,8 +926,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -898,7 +935,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -916,7 +952,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#877#1191#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -927,8 +966,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -938,7 +975,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -946,7 +982,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#877#1191#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -967,8 +1006,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -978,7 +1015,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -996,7 +1032,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#877#1191#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1007,8 +1046,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -1033,7 +1070,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="748">
           <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1057,7 +1093,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1320">
           <caret line="30" column="0" lean-forward="true" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1083,8 +1118,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -1104,8 +1137,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -1125,8 +1156,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -1153,8 +1182,6 @@
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -1201,7 +1228,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="592">
           <caret line="92" column="25" lean-forward="false" selection-start-line="92" selection-start-column="25" selection-end-line="92" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1209,7 +1235,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="792">
           <caret line="34" column="41" lean-forward="false" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1217,7 +1242,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="724">
           <caret line="1469" column="31" lean-forward="false" selection-start-line="1469" selection-start-column="31" selection-end-line="1469" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1225,13 +1249,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="22" column="25" lean-forward="false" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
+        <state relative-caret-position="132">
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1242,12 +1265,10 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="572">
-          <caret line="187" column="46" lean-forward="true" selection-start-line="187" selection-start-column="46" selection-end-line="187" selection-end-column="46" />
+          <caret line="187" column="46" lean-forward="false" selection-start-line="187" selection-start-column="46" selection-end-line="187" selection-end-column="46" />
           <folding>
             <element signature="e#0#7124#0" expanded="true" />
             <element signature="imports" expanded="true" />
-            <element signature="e#1887#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
             <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
@@ -1255,9 +1276,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="925">
-          <caret line="70" column="51" lean-forward="false" selection-start-line="70" selection-start-column="51" selection-end-line="70" selection-end-column="51" />
-          <folding />
+        <state relative-caret-position="1188">
+          <caret line="50" column="26" lean-forward="true" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+          <folding>
+            <element signature="e#877#1191#0" expanded="true" />
+            <element signature="e#1190#1191#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
