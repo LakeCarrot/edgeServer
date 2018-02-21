@@ -84,8 +84,6 @@ public class Receiver implements Runnable {
     @Override
     public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
       String reqMessage = req.getMessage();
-      System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      System.out.println(reqMessage);
       String host = reqMessage.split(":")[0];
       String appType = reqMessage.split(":")[1];
       double rawRte = Double.parseDouble(reqMessage.split(":")[2]);
