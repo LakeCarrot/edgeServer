@@ -183,6 +183,7 @@ public class EdgeServer {
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
 			String appType = req.getMessage();
+			System.out.println(appType);
 			String destinationIP = null;
 			try {
 				destinationIP = receiver.getAppDest(appType);
