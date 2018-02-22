@@ -67,7 +67,7 @@ public class Receiver implements Runnable {
     } else {
       destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
-    destination = "172.28.142.176";  // always use slave1
+    //destination = "172.28.142.176";  // always use slave1
     System.out.println("*****************************************");
     System.out.println("*****************************************");
     System.out.println("*****************************************");
