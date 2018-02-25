@@ -94,7 +94,7 @@ public class Receiver implements Runnable {
         if (rateMeta.containsKey(host)) {
           //System.out.println("old " + appType + " on " + host);
           prevRate = rateMeta.get(host);
-          filteredRate = 0.7 * prevRate + 0.3 * rawRte;
+          filteredRate = 0.5 * prevRate + 0.5 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
           // first app on this host
