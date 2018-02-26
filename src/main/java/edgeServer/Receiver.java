@@ -49,6 +49,8 @@ public class Receiver implements Runnable {
       hostName = "slave3";
     else if (host.equals("172.28.136.3"))
       hostName = "master";
+    else
+      hostName = host;
 
     return hostName;
   }
