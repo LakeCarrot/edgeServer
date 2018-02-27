@@ -26,8 +26,8 @@ public class Sender {
     Set<String> neighbours = new HashSet<>();
     neighbours.add("172.28.142.176");
     neighbours.add("172.28.140.65");
-    neighbours.add("172.28.142.226");
-    neighbours.add("172.28.136.3");
+    //neighbours.add("172.28.142.226");
+    //neighbours.add("172.28.136.3");
     System.out.println("neighbours: " + neighbours);
     for (String neighbour : neighbours) {
       System.out.println("Connect to neighbor " + neighbour + " for schedule info sync up");
