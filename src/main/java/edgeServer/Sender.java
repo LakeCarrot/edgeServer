@@ -37,7 +37,7 @@ public class Sender {
       OffloadingGrpc.OffloadingBlockingStub stub = OffloadingGrpc.newBlockingStub(mChannel);
       String syncMessage = appType + ":" + hostId + ":" + Double.toString(rate);
       OffloadingRequest message = OffloadingRequest.newBuilder().setMessage(syncMessage).build();
-      stub.startService(message);
+      OffloadingReply reply = stub.startService(message);
       try {
         mChannel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
       } catch (Exception e) {
