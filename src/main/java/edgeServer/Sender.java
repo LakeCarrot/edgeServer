@@ -3,7 +3,9 @@ package edgeServer;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import edgeOffloading.OffloadingGrpc;
@@ -11,47 +13,37 @@ import edgeOffloading.OffloadingOuterClass.OffloadingRequest;
 import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
 public class Sender implements Runnable {
-  public void run() {
-    Set<String> neighbours = new HashSet<>();
-    neighbours.add("172.28.142.176");
-    int hostPort = 50050;
-    ManagedChannel mChannel;
+  static String appType;
+  static String hostId;
+  static Double rate;
 
-    while (true) {
-      mChannel = ManagedChannelBuilder.forAddress("localhost", hostPort)
+  Set<String> neighbours = new HashSet<>();
+
+  public void Sender() {
+    neighbours.add("172.28.142.176");
+    neighbours.add("172.28.140.65");
+    neighbours.add("172.28.142.226");
+    neighbours.add("172.28.136.3");
+  }
+
+  public void sync(String appType, String hostId, Double rate) {
+    this.appType = appType;
+    this.hostId = hostId;
+    this.rate = rate;
+  }
+
+  public void run() {
+    int hostPort = 50049;
+    ManagedChannel mChannel;
+    for (String neighbour : neighbours) {
+      System.out.println("Connect to neighbor " + neighbour + " for schedule info sync up");
+      mChannel = ManagedChannelBuilder.forAddress(neighbour, hostPort)
           .usePlaintext(true)
           .build();
       OffloadingGrpc.OffloadingBlockingStub stub = OffloadingGrpc.newBlockingStub(mChannel);
-      OffloadingRequest message = OffloadingRequest.newBuilder().setMessage("test sender").build();
-      OffloadingReply reply = stub.startService(message);
-      System.out.println("reply: " + reply);
-      try {
-        Thread.sleep(10000);
-      } catch (Exception e) {
-        System.out.println("Exception: " + e);
-      }
+      String syncMessage = appType + ":" + hostId + ":" + Double.toString(rate);
+      OffloadingRequest message = OffloadingRequest.newBuilder().setMessage(syncMessage).build();
+      stub.startService(message);
     }
-
-
-
-
-
-
-    /*
-    while (true) {
-      for (String neighbour : neighbours) {
-        System.out.println("try to connect " + neighbour + " at " + hostPort);
-        OffloadingGrpc.OffloadingBlockingStub stub = OffloadingGrpc.newBlockingStub(mChannel);
-        OffloadingRequest message = OffloadingRequest.newBuilder().setMessage("hi2").build();
-        //OffloadingReply reply = stub.startService(message);
-        //System.out.println("reply: " + reply);
-      }
-      try {
-        Thread.sleep(10000);
-      } catch (Exception e) {
-        System.out.println("Exception: " + e);
-      }
-    }
-    */
   }
 }
