@@ -112,12 +112,12 @@ public class Receiver implements Runnable {
       Double rate = Double.parseDouble(reqMessage.split(":")[2]);
       System.out.println(appType + " reports to " + host + " with rate " + rate);
       Map<String, Double> rateMeta = appRate.get(appType);
-      if (rateMeta != null)
-        rateMeta.put(host, rate);
-      else {
+      if (rateMeta.isEmpty()) {
         rateMeta = new HashMap<>();
         rateMeta.put(host, rate);
         appRate.put(appType, rateMeta);
+      } else {
+        rateMeta.put(host, rate);
       }
       System.out.println("appRate: " + appRate);
       OffloadingReply reply = OffloadingReply.newBuilder()
