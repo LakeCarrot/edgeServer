@@ -151,8 +151,9 @@ public class Receiver implements Runnable {
         rateMeta = new HashMap<>();
         rateMeta.put(host, rawRte);
         appRate.put(appType, rateMeta);
-        sender.sync(appType, host, rawRte);
+        //sender.sync(appType, host, rawRte);
       }
+      sender.sync(appType, host, rawRte);
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate);
