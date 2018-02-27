@@ -152,7 +152,6 @@ public class Receiver implements Runnable {
         appRate.put(appType, rateMeta);
         //sender.sync(appType, host, rawRte);
       }
-      System.out.println("Start to sync up");
       Sender sender = new Sender();
       sender.sync(appType, host, rawRte);
       long time = System.currentTimeMillis();

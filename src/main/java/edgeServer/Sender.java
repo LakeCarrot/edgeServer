@@ -18,20 +18,16 @@ public class Sender {
   static String hostId;
   static Double rate;
 
-  Set<String> neighbours = new HashSet<>();
-
-  public void Sender() {
-    neighbours.add("172.28.142.176");
-    neighbours.add("172.28.140.65");
-    neighbours.add("172.28.142.226");
-    neighbours.add("172.28.136.3");
-  }
-
   public void sync(String appType, String hostId, Double rate) {
     this.appType = appType;
     this.hostId = hostId;
     this.rate = rate;
     int hostPort = 50049;
+    Set<String> neighbours = new HashSet<>();
+    neighbours.add("172.28.142.176");
+    neighbours.add("172.28.140.65");
+    neighbours.add("172.28.142.226");
+    neighbours.add("172.28.136.3");
     System.out.println("neighbours: " + neighbours);
     for (String neighbour : neighbours) {
       System.out.println("Connect to neighbor " + neighbour + " for schedule info sync up");
