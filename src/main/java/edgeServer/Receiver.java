@@ -17,7 +17,6 @@ public class Receiver implements Runnable {
   static Map<String, Map<String, Double>> appRate = new HashMap<>(); // appType, hostId, filteredRate
   static double rate1 = 0;
   static double rate2 = 0;
-  static Sender sender = new Sender();
 
   public void run() {
     // receive app report
@@ -153,6 +152,8 @@ public class Receiver implements Runnable {
         appRate.put(appType, rateMeta);
         //sender.sync(appType, host, rawRte);
       }
+      System.out.println("Start to sync up");
+      Sender sender = new Sender();
       sender.sync(appType, host, rawRte);
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);

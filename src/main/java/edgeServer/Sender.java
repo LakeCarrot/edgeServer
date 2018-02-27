@@ -32,6 +32,7 @@ public class Sender {
     this.hostId = hostId;
     this.rate = rate;
     int hostPort = 50049;
+    System.out.println("neighbours: " + neighbours);
     for (String neighbour : neighbours) {
       System.out.println("Connect to neighbor " + neighbour + " for schedule info sync up");
       ManagedChannel mChannel = ManagedChannelBuilder.forAddress(neighbour, hostPort)
