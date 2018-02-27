@@ -7,12 +7,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import edgeOffloading.OffloadingGrpc;
 import edgeOffloading.OffloadingOuterClass.OffloadingRequest;
 import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
-public class Sender implements Runnable {
+public class Sender {
   static String appType;
   static String hostId;
   static Double rate;
@@ -30,20 +31,21 @@ public class Sender implements Runnable {
     this.appType = appType;
     this.hostId = hostId;
     this.rate = rate;
-  }
-
-  public void run() {
     int hostPort = 50049;
-    ManagedChannel mChannel;
     for (String neighbour : neighbours) {
       System.out.println("Connect to neighbor " + neighbour + " for schedule info sync up");
-      mChannel = ManagedChannelBuilder.forAddress(neighbour, hostPort)
+      ManagedChannel mChannel = ManagedChannelBuilder.forAddress(neighbour, hostPort)
           .usePlaintext(true)
           .build();
       OffloadingGrpc.OffloadingBlockingStub stub = OffloadingGrpc.newBlockingStub(mChannel);
       String syncMessage = appType + ":" + hostId + ":" + Double.toString(rate);
       OffloadingRequest message = OffloadingRequest.newBuilder().setMessage(syncMessage).build();
       stub.startService(message);
+      try {
+        mChannel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
+      } catch (Exception e) {
+        System.out.println(e);
+      }
     }
   }
 }
