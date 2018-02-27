@@ -153,6 +153,7 @@ public class Receiver implements Runnable {
         //sender.sync(appType, host, rawRte);
       }
       Sender sender = new Sender();
+      System.out.println("Start to sync 1111111");
       sender.sync(appType, host, rawRte);
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
