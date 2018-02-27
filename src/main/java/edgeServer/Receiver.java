@@ -113,11 +113,13 @@ public class Receiver implements Runnable {
       System.out.println(appType + " reports to " + host + " with rate " + rate);
       Map<String, Double> rateMeta = appRate.get(appType);
       rateMeta.put(host, rate);
+      /*
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
       responseObserver.onNext(reply);
       responseObserver.onCompleted();
+      */
     }
   }
 
