@@ -117,7 +117,7 @@ public class Receiver implements Runnable {
       System.out.println("*****************************************");
       System.out.println("*****************************************");
       System.out.println("rateMeta: " + rateMeta);
-      if (rateMeta.isEmpty()) {
+      if (rateMeta == null) {
         rateMeta = new HashMap<>();
         rateMeta.put(host, rate);
         appRate.put(appType, rateMeta);
