@@ -110,13 +110,7 @@ public class Receiver implements Runnable {
       String appType = reqMessage.split(":")[0];
       String host = reqMessage.split(":")[1];
       Double rate = Double.parseDouble(reqMessage.split(":")[2]);
-      System.out.println(appType + " reports to " + host + " [with] rate " + rate);
-      System.out.println("appRate: " + appRate);
       Map<String, Double> rateMeta = appRate.get(appType);
-      System.out.println("*****************************************");
-      System.out.println("*****************************************");
-      System.out.println("*****************************************");
-      System.out.println("rateMeta: " + rateMeta);
       if (rateMeta == null) {
         rateMeta = new HashMap<>();
         rateMeta.put(host, rate);
@@ -165,7 +159,6 @@ public class Receiver implements Runnable {
         //sender.sync(appType, host, rawRte);
       }
       Sender sender = new Sender();
-      System.out.println("Start to sync 1111111");
       sender.sync(appType, host, rawRte);
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);

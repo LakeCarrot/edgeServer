@@ -30,7 +30,6 @@ public class Sender {
     //neighbours.add("172.28.136.3");
     System.out.println("neighbours: " + neighbours);
     for (String neighbour : neighbours) {
-      System.out.println("Connect to neighbor " + neighbour + " for schedule info sync up");
       ManagedChannel mChannel = ManagedChannelBuilder.forAddress(neighbour, hostPort)
           .usePlaintext(true)
           .build();
