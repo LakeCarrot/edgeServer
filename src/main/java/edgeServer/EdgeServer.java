@@ -210,9 +210,12 @@ public class EdgeServer {
 			Runtime rt = Runtime.getRuntime();
 			try {
 				String address = Integer.toString(dockerPort) + ":" + Integer.toString(50052);
+				long timeStart = System.currentTimeMillis();
 				String command = "docker run -p " + address + " --name " + dockerName.split("/")[1] + Integer.toString(dockerPort) + "  " + dockerName;
-				System.out.println("[DEBUG] command: " + command);
+				//System.out.println("[DEBUG] command: " + command);
 				Process pr = rt.exec(command);
+				long timeEnd = System.currentTimeMillis();
+				System.out.println("Docker run overhead: " + (timeEnd - timeStart));
 				System.out.println("Input end");
 				System.out.println("start the container");
 			} catch (IOException e) {
