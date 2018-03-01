@@ -6,10 +6,7 @@ import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import edgeOffloading.OffloadingGrpc;
 import edgeOffloading.OffloadingOuterClass.OffloadingRequest;
@@ -17,6 +14,7 @@ import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
 public class Receiver implements Runnable {
   static Map<String, Map<String, Double>> appRate = new HashMap<>(); // appType, hostId, filteredRate
+  static Map<String, List<Integer>> serverCache = new HashMap<>();
   static double rate1 = 0;
   static double rate2 = 0;
 
@@ -41,6 +39,7 @@ public class Receiver implements Runnable {
       System.out.println("Exception: " + e);
     }
 
+    /*
     // receive neighbor scheduler sync-up
     port = 50049;
     try {
@@ -60,6 +59,7 @@ public class Receiver implements Runnable {
     } catch (Exception e) {
       System.out.println("Exception: " + e);
     }
+    */
   }
 
   public static String hostTranslation(String host) {
@@ -93,22 +93,10 @@ public class Receiver implements Runnable {
           maxRate = entry.getValue();
         }
       }
-      /*
-      for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
-        curRate = entry.getValue();
-        machineRates.add(curRate);
-        totalRates = totalRates + curRate;
-      }
-
-      for (double machineRate : machineRates) {
-        prob = machineRate / totalRates;
-      }
-      */
     } else {
       destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
-    return destination;
-    /*
+
     //destination = "172.28.142.176";  // always use slave1
     System.out.println("*****************************************");
     System.out.println("*****************************************");
@@ -120,7 +108,6 @@ public class Receiver implements Runnable {
     System.out.println("*****************************************");
 
     return destination;
-    */
   }
 
   static class SyncupImpl extends OffloadingGrpc.OffloadingImplBase {
@@ -146,35 +133,42 @@ public class Receiver implements Runnable {
     }
   }
 
+  static int lruCache() {
+    Random rand = new Random();
+    int  n = rand.nextInt(50);
+    int downloadTime = 0;
+    if (n > 80) {
+      // docker image is not preloaded
+      downloadTime = 100;
+    }
+
+    return downloadTime;
+  }
+
   static class AppReportImpl extends OffloadingGrpc.OffloadingImplBase {
     @Override
     public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
+      int downloadTme = lruCache();
       String reqMessage = req.getMessage();
       String host = reqMessage.split(":")[0];
       String appType = reqMessage.split(":")[1];
       double rawRte = Double.parseDouble(reqMessage.split(":")[2]);
-      try {
-        String localIP = InetAddress.getLocalHost().toString().split("/")[1];
-        if (!localIP.equals(host)) {
-          System.out.println("WRONG!! Should not report to central scheduler!");
-          System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-          System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
-      } catch (Exception e) {
-        System.out.println(e);
-      }
+      if (appType.equals("speech"))
+        rawRte = 96078 / (downloadTme + 96078 / rawRte);
+
       double filteredRate = 0;
       double prevRate = 0;
       double contentionThres = 0.9;
       Map<String, Double> rateMeta = appRate.get(appType);
-      Sender sender = new Sender();
+      //Sender sender = new Sender();
       if (rateMeta != null) {
         if (rateMeta.containsKey(host)) {
           prevRate = rateMeta.get(host);
+          /*
           if (contentionThres * prevRate >= rawRte) {
-            sender.sync(appType, host, rawRte);
+            //sender.sync(appType, host, rawRte);
           }
+          */
           filteredRate = 0.8 * prevRate + 0.2 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
@@ -186,11 +180,13 @@ public class Receiver implements Runnable {
         rateMeta = new HashMap<>();
         rateMeta.put(host, rawRte);
         appRate.put(appType, rateMeta);
-        sender.sync(appType, host, rawRte);
+        //sender.sync(appType, host, rawRte);
       }
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate);
+      if (downloadTme > 0)
+        System.out.println("downloadTme: " + downloadTme);
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();

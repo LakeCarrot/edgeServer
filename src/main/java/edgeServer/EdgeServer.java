@@ -180,7 +180,7 @@ public class EdgeServer {
 	static class OffloadingImpl extends OffloadingGrpc.OffloadingImplBase {
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
-			String appType = req.getMessage();
+			String appType = req.getMessage().split(":");
 			String destinationIP = null;
 			try {
 				destinationIP = receiver.getAppDest(appType);
