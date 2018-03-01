@@ -6,7 +6,9 @@ import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edgeOffloading.OffloadingGrpc;
@@ -81,15 +83,32 @@ public class Receiver implements Runnable {
     String destination = null;
     if (rateMeta != null) {
       double maxRate = 0;
+      double curRate = 0;
+      double totalRates = 0;
+      List<Double> machineRates = new ArrayList<>();
+      double prob = 0;
       for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
-        if (entry.getValue() > maxRate) {
-          maxRate = entry.getValue();
+        if (maxRate < entry.getValue()) {
           destination = entry.getKey();
+          maxRate = entry.getValue();
         }
       }
+      /*
+      for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
+        curRate = entry.getValue();
+        machineRates.add(curRate);
+        totalRates = totalRates + curRate;
+      }
+
+      for (double machineRate : machineRates) {
+        prob = machineRate / totalRates;
+      }
+      */
     } else {
       destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
+    return destination;
+    /*
     //destination = "172.28.142.176";  // always use slave1
     System.out.println("*****************************************");
     System.out.println("*****************************************");
@@ -101,6 +120,7 @@ public class Receiver implements Runnable {
     System.out.println("*****************************************");
 
     return destination;
+    */
   }
 
   static class SyncupImpl extends OffloadingGrpc.OffloadingImplBase {
@@ -118,7 +138,6 @@ public class Receiver implements Runnable {
       } else {
         rateMeta.put(host, rate);
       }
-      System.out.println("appRate: " + appRate);
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
@@ -134,32 +153,41 @@ public class Receiver implements Runnable {
       String host = reqMessage.split(":")[0];
       String appType = reqMessage.split(":")[1];
       double rawRte = Double.parseDouble(reqMessage.split(":")[2]);
+      try {
+        String localIP = InetAddress.getLocalHost().toString().split("/")[1];
+        if (!localIP.equals(host)) {
+          System.out.println("WRONG!! Should not report to central scheduler!");
+          System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+          System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+      } catch (Exception e) {
+        System.out.println(e);
+      }
       double filteredRate = 0;
       double prevRate = 0;
+      double contentionThres = 0.9;
       Map<String, Double> rateMeta = appRate.get(appType);
+      Sender sender = new Sender();
       if (rateMeta != null) {
         if (rateMeta.containsKey(host)) {
-          //System.out.println("old " + appType + " on " + host);
           prevRate = rateMeta.get(host);
+          if (contentionThres * prevRate >= rawRte) {
+            sender.sync(appType, host, rawRte);
+          }
           filteredRate = 0.8 * prevRate + 0.2 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
-          // first app on this host
-          //System.out.println("first " + appType + " on " + host);
           filteredRate = rawRte;
           rateMeta.put(host, rawRte);
         }
       } else {
-        // first app in the system
-        //System.out.println("first " + appType + " in the system");
         filteredRate = rawRte;
         rateMeta = new HashMap<>();
         rateMeta.put(host, rawRte);
         appRate.put(appType, rateMeta);
-        //sender.sync(appType, host, rawRte);
+        sender.sync(appType, host, rawRte);
       }
-      Sender sender = new Sender();
-      sender.sync(appType, host, rawRte);
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate);

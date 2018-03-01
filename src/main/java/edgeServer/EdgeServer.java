@@ -92,8 +92,6 @@ public class EdgeServer {
 		receiver = new Receiver();
 		Thread receiverThread = new Thread(receiver);
 		receiverThread.start();
-		//Thread sender = new Thread(new Sender());
-		//sender.start();
 		server.start();
 		server.blockUntilShutdown();
 	}
