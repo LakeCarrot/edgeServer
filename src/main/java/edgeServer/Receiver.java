@@ -14,7 +14,7 @@ import edgeOffloading.OffloadingOuterClass.OffloadingReply;
 
 public class Receiver implements Runnable {
   static Map<String, Map<String, Double>> appRate = new HashMap<>(); // appType, hostId, filteredRate
-  static Map<String, List<Integer>> serverCache = new HashMap<>();
+  static Map<String, Set<Integer>> serverCache = new HashMap<>();
   static double rate1 = 0;
   static double rate2 = 0;
 
@@ -133,13 +133,34 @@ public class Receiver implements Runnable {
     }
   }
 
-  static int lruCache() {
+  static int lruCache(String host) {
+    // 400 types of apps in total
+    // preloading 70% (280) of the app types
+    // cache entry: 9
     Random rand = new Random();
-    int  n = rand.nextInt(50);
+    int  n = rand.nextInt(400);
+    System.out.println("n: " + n);
     int downloadTime = 0;
-    if (n > 80) {
+    if (n > 280) {
       // docker image is not preloaded
-      downloadTime = 100;
+      Set<Integer> cachedItems = serverCache.get(host);
+      if (cachedItems != null) {
+        if (!cachedItems.contains(n)) {
+          // n is not cached
+          downloadTime = 100;
+          if (cachedItems.size() < 9)
+            cachedItems.add(n);
+          else {
+            // cache replacement algo
+
+          }
+        }
+      } else {
+        // empty cache, so add n to it
+        cachedItems.add(n);
+      }
+
+
     }
 
     return downloadTime;
@@ -148,9 +169,9 @@ public class Receiver implements Runnable {
   static class AppReportImpl extends OffloadingGrpc.OffloadingImplBase {
     @Override
     public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
-      int downloadTme = lruCache();
       String reqMessage = req.getMessage();
       String host = reqMessage.split(":")[0];
+      int downloadTme = lruCache(host);
       String appType = reqMessage.split(":")[1];
       double rawRte = Double.parseDouble(reqMessage.split(":")[2]);
       if (appType.equals("speech"))
