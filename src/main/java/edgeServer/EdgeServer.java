@@ -29,12 +29,10 @@ public class EdgeServer {
 	private Server server;
 	private Server dockerServer;
 	private Server cleanDocker;
-	private static String LOCALIP; // localhost's ip address
 	private static int appCount = 0;
 	private static Receiver receiver;
 
 	private void start() throws IOException {
-		LOCALIP = InetAddress.getLocalHost().toString().split("/")[1];
 		/* The port on which the server should run */
 		int port = 50051;
 		server = ServerBuilder.forPort(port)
@@ -187,12 +185,6 @@ public class EdgeServer {
 	static class OffloadingImpl extends OffloadingGrpc.OffloadingImplBase {
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
-      OffloadingReply reply = OffloadingReply.newBuilder()
-          .setMessage("")
-          .build();
-      responseObserver.onNext(reply);
-      responseObserver.onCompleted();
-      /*
 			String appType = req.getMessage();
 			String destinationIP = null;
 			try {
@@ -206,7 +198,6 @@ public class EdgeServer {
 					.build();
 			responseObserver.onNext(reply);
 			responseObserver.onCompleted();
-			*/
 		}
 	}
 
