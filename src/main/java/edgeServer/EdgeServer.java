@@ -160,18 +160,21 @@ public class EdgeServer {
 
 		private boolean containerReady(String name) {
 			Runtime rt = Runtime.getRuntime();
+      System.out.println("1111111111");
 			try {
 				// Execute the command
 				String command = "docker container inspect -f {{.State.Running}} " + name;
 				Process pr = rt.exec(command);
-
+        System.out.println("check command: " + command);
 				// Get the input steam and read from it
 				BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String debug;
 				while((debug = in.readLine()) != null) {
-					if(debug.equals("true"))
-						System.out.println(name + " is ready to serve!");
-					return true;
+				  System.out.println("debug info: " + debug);
+					if(debug.equals("true")) {
+            System.out.println(name + " is ready to serve!");
+            return true;
+          }
 				}
 				return false;
 			} catch (IOException e) {

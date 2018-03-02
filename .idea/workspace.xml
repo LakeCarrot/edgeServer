@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b723faf3-59b8-417c-b713-d3f9a7e14870" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -39,14 +38,13 @@
           <file leaf-file-name="EdgeServer.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="45">
-                  <caret line="133" column="23" lean-forward="false" selection-start-line="133" selection-start-column="23" selection-end-line="133" selection-end-column="23" />
+                <state relative-caret-position="1358">
+                  <caret line="177" column="9" lean-forward="true" selection-start-line="177" selection-start-column="9" selection-end-line="177" selection-end-column="9" />
                   <folding>
-                    <element signature="e#0#7407#0" expanded="true" />
+                    <element signature="e#0#7580#0" expanded="true" />
                     <element signature="imports" expanded="true" />
                     <element signature="e#1887#2192#0" expanded="true" />
                     <element signature="e#2191#2192#0" expanded="true" />
-                    <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -59,7 +57,7 @@
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="951">
+                <state relative-caret-position="1347">
                   <caret line="95" column="12" lean-forward="true" selection-start-line="95" selection-start-column="12" selection-end-line="95" selection-end-column="12" />
                   <folding>
                     <element signature="e#942#1256#0" expanded="true" />
@@ -775,12 +773,12 @@
       <workItem from="1518299529586" duration="1797000" />
       <workItem from="1518318499686" duration="20038000" />
       <workItem from="1518713939323" duration="50198000" />
-      <workItem from="1519248572950" duration="45596000" />
+      <workItem from="1519248572950" duration="46074000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="144920000" />
+    <option name="totallyTimeSpent" value="145398000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="0" width="3864" height="2074" extended-state="0" />
@@ -882,11 +880,10 @@
         <state relative-caret-position="7392">
           <caret line="187" column="46" lean-forward="true" selection-start-line="187" selection-start-column="46" selection-end-line="187" selection-end-column="46" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -928,11 +925,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -971,11 +967,10 @@
         <state relative-caret-position="1804">
           <caret line="62" column="9" lean-forward="false" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1014,11 +1009,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1057,11 +1051,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1133,11 +1126,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1154,11 +1146,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1175,11 +1166,10 @@
         <state relative-caret-position="616">
           <caret line="16" column="36" lean-forward="false" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="36" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1203,11 +1193,10 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1301,7 +1290,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="951">
+        <state relative-caret-position="1347">
           <caret line="95" column="12" lean-forward="true" selection-start-line="95" selection-start-column="12" selection-end-line="95" selection-end-column="12" />
           <folding>
             <element signature="e#942#1256#0" expanded="true" />
@@ -1312,14 +1301,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="133" column="23" lean-forward="false" selection-start-line="133" selection-start-column="23" selection-end-line="133" selection-end-column="23" />
+        <state relative-caret-position="1358">
+          <caret line="177" column="9" lean-forward="true" selection-start-line="177" selection-start-column="9" selection-end-line="177" selection-end-column="9" />
           <folding>
-            <element signature="e#0#7407#0" expanded="true" />
+            <element signature="e#0#7580#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1887#2192#0" expanded="true" />
             <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="method#containerReady#0;class#PrepareDockerImpl#0;class#EdgeServer#0" expanded="false" />
           </folding>
         </state>
       </provider>
