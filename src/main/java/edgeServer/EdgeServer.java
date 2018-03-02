@@ -222,7 +222,7 @@ public class EdgeServer {
         BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
         String inputLine;
         while((inputLine = in.readLine()) != null) {
-          System.out.println(inputLine);
+          System.out.println("inputLine: " + inputLine);
         }
         in.close();
 				long timeEnd = System.currentTimeMillis();
