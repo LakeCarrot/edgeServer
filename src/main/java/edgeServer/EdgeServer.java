@@ -188,6 +188,7 @@ public class EdgeServer {
 			String appType = req.getMessage();
 			String destinationIP = null;
 			try {
+        System.out.println("try to find destination for " + appType);
 				destinationIP = receiver.getAppDest(appType);
 			} catch (Exception e) {
 				new Exception().printStackTrace();

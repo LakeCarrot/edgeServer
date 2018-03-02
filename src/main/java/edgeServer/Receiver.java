@@ -79,8 +79,10 @@ public class Receiver implements Runnable {
   }
 
   public String getAppDest(String appType) throws Exception {
+    System.out.println("appRate: " + appRate);
     Map<String, Double> rateMeta = appRate.get(appType);
     String destination = null;
+    System.out.println("rateMeta: " + rateMeta);
     if (rateMeta != null) {
       double maxRate = 0;
       double curRate = 0;

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b723faf3-59b8-417c-b713-d3f9a7e14870" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -38,10 +39,10 @@
           <file leaf-file-name="EdgeServer.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1347">
-                  <caret line="196" column="33" lean-forward="false" selection-start-line="196" selection-start-column="33" selection-end-line="196" selection-end-column="33" />
+                <state relative-caret-position="1127">
+                  <caret line="191" column="40" lean-forward="true" selection-start-line="191" selection-start-column="40" selection-end-line="191" selection-end-column="40" />
                   <folding>
-                    <element signature="e#0#7805#0" expanded="true" />
+                    <element signature="e#0#7875#0" expanded="true" />
                     <element signature="imports" expanded="true" />
                     <element signature="e#1764#2069#0" expanded="true" />
                     <element signature="e#2068#2069#0" expanded="true" />
@@ -57,8 +58,8 @@
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1050">
-                  <caret line="96" column="86" lean-forward="true" selection-start-line="96" selection-start-column="86" selection-end-line="96" selection-end-column="86" />
+                <state relative-caret-position="308">
+                  <caret line="81" column="46" lean-forward="false" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
                   <folding>
                     <element signature="e#942#1256#0" expanded="true" />
                     <element signature="e#1255#1256#0" expanded="true" />
@@ -95,6 +96,7 @@
       <find>RuiSchedule</find>
       <find>start the container</find>
       <find>containerReady</find>
+      <find>appRate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -775,12 +777,12 @@
       <workItem from="1518299529586" duration="1797000" />
       <workItem from="1518318499686" duration="20038000" />
       <workItem from="1518713939323" duration="50198000" />
-      <workItem from="1519248572950" duration="49837000" />
+      <workItem from="1519248572950" duration="49980000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149161000" />
+    <option name="totallyTimeSpent" value="149304000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="0" width="3864" height="2074" extended-state="0" />
@@ -872,7 +874,7 @@
         <state relative-caret-position="7392">
           <caret line="187" column="46" lean-forward="true" selection-start-line="187" selection-start-column="46" selection-end-line="187" selection-end-column="46" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -917,7 +919,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -959,7 +961,7 @@
         <state relative-caret-position="1804">
           <caret line="62" column="9" lean-forward="false" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1001,7 +1003,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1043,7 +1045,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1118,7 +1120,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1138,7 +1140,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1158,7 +1160,7 @@
         <state relative-caret-position="616">
           <caret line="16" column="36" lean-forward="false" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="36" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1185,7 +1187,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1293,10 +1295,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1347">
-          <caret line="196" column="33" lean-forward="false" selection-start-line="196" selection-start-column="33" selection-end-line="196" selection-end-column="33" />
+        <state relative-caret-position="1127">
+          <caret line="191" column="40" lean-forward="true" selection-start-line="191" selection-start-column="40" selection-end-line="191" selection-end-column="40" />
           <folding>
-            <element signature="e#0#7805#0" expanded="true" />
+            <element signature="e#0#7875#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="e#1764#2069#0" expanded="true" />
             <element signature="e#2068#2069#0" expanded="true" />
@@ -1306,8 +1308,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="96" column="86" lean-forward="true" selection-start-line="96" selection-start-column="86" selection-end-line="96" selection-end-column="86" />
+        <state relative-caret-position="308">
+          <caret line="81" column="46" lean-forward="false" selection-start-line="81" selection-start-column="46" selection-end-line="81" selection-end-column="46" />
           <folding>
             <element signature="e#942#1256#0" expanded="true" />
             <element signature="e#1255#1256#0" expanded="true" />
