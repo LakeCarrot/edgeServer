@@ -94,6 +94,7 @@ public class Receiver implements Runnable {
         }
       }
     } else {
+      System.out.println("return local ip: " + InetAddress.getLocalHost().toString());
       destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
 
