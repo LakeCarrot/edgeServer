@@ -133,6 +133,7 @@ public class Receiver implements Runnable {
     }
   }
 
+  /*
   static int lruCache(String host) {
     // 400 types of apps in total
     // preloading 70% (280) of the app types
@@ -152,31 +153,27 @@ public class Receiver implements Runnable {
             cachedItems.add(n);
           else {
             // cache replacement algo
-
           }
         }
       } else {
         // empty cache, so add n to it
+        cachedItems = new HashSet<>();
         cachedItems.add(n);
       }
-
-
     }
 
     return downloadTime;
   }
+  */
 
   static class AppReportImpl extends OffloadingGrpc.OffloadingImplBase {
     @Override
     public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
       String reqMessage = req.getMessage();
       String host = reqMessage.split(":")[0];
-      int downloadTme = lruCache(host);
+      //int downloadTme = lruCache(host);
       String appType = reqMessage.split(":")[1];
       double rawRte = Double.parseDouble(reqMessage.split(":")[2]);
-      if (appType.equals("speech"))
-        rawRte = 96078 / (downloadTme + 96078 / rawRte);
-
       double filteredRate = 0;
       double prevRate = 0;
       double contentionThres = 0.9;
@@ -206,8 +203,6 @@ public class Receiver implements Runnable {
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate);
-      if (downloadTme > 0)
-        System.out.println("downloadTme: " + downloadTme);
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();

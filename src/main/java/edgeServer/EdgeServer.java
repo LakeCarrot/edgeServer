@@ -143,6 +143,7 @@ public class EdgeServer {
 					.setMessage("well prepared")
 					.build();
 			Thread t = s.new offloadThread(reqMessage, appPort);
+			long timeStart = System.currentTimeMillis();
 			t.start();
 			while(!containerReady(reqMessage.split("/")[1])) {
 				try {
@@ -151,6 +152,8 @@ public class EdgeServer {
 					Thread.currentThread().interrupt();
 				}
 			}
+			long timeEnd = System.currentTimeMillis();
+			System.out.println("Docker image downloading time: " + (timeEnd - timeStart));
 			responseObserver.onNext(reply);
 			responseObserver.onCompleted();
 		}
@@ -193,7 +196,6 @@ public class EdgeServer {
 					.build();
 			responseObserver.onNext(reply);
 			responseObserver.onCompleted();
-
 		}
 	}
 
