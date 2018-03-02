@@ -220,7 +220,9 @@ public class EdgeServer {
 				String command = "docker run -p " + address + " --name " + dockerName.split("/")[1] + Integer.toString(dockerPort) + "  " + dockerName;
 				Process pr = rt.exec(command);
         BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        String inputLine;
+        String inputLine = in.readLine();
+        while (inputLine == null)
+          inputLine = in.readLine();
         while((inputLine = in.readLine()) != null) {
           System.out.println("inputLine: " + inputLine);
         }
