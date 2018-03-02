@@ -219,16 +219,19 @@ public class EdgeServer {
 				long timeStart = System.currentTimeMillis();
 				String command = "docker run -p " + address + " --name " + dockerName.split("/")[1] + Integer.toString(dockerPort) + "  " + dockerName;
 				Process pr = rt.exec(command);
-				/*
+
         BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        String inputLine = in.readLine();
+        String inputLine;
+        /*
         while (inputLine == null)
           inputLine = in.readLine();
+        */
         while((inputLine = in.readLine()) != null) {
           System.out.println("inputLine: " + inputLine);
         }
+        System.out.println("OUT!");
         in.close();
-        */
+
 				long timeEnd = System.currentTimeMillis();
 				System.out.println("Docker run overhead: " + (timeEnd - timeStart));
 				System.out.println("Input end");
