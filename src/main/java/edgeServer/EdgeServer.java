@@ -228,6 +228,8 @@ public class EdgeServer {
         */
         while((inputLine = in.readLine()) != null) {
           System.out.println("inputLine: " + inputLine);
+          if (inputLine.contains("BUILD SUCCESSFUL"))
+            break;
         }
         System.out.println("OUT!");
         in.close();
