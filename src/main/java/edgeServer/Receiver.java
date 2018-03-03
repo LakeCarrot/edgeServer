@@ -17,8 +17,29 @@ public class Receiver implements Runnable {
   static Map<String, Set<Integer>> serverCache = new HashMap<>();
   static double rate1 = 0;
   static double rate2 = 0;
+  final static Map<String, String> schedulerTrans = new HashMap<>();
 
   public void run() {
+    schedulerTrans.put("34.218.97.178", "m1");
+    schedulerTrans.put("52.32.37.78", "m2");
+    schedulerTrans.put("34.210.236.180", "m3");
+    schedulerTrans.put("35.162.89.207", "m4");
+    schedulerTrans.put("34.215.123.179", "m5");
+    schedulerTrans.put("34.218.85.62", "m6");
+    schedulerTrans.put("34.218.40.221", "m7");
+    schedulerTrans.put("54.70.118.25", "m8");
+    schedulerTrans.put("34.215.4.4", "m9");
+    schedulerTrans.put("34.212.255.112", "m10");
+    schedulerTrans.put("34.218.34.145", "m11");
+    schedulerTrans.put("34.212.158.200", "m12");
+    schedulerTrans.put("35.165.231.66", "m13");
+    schedulerTrans.put("35.160.178.233", "m14");
+    schedulerTrans.put("35.162.173.174", "m15");
+    schedulerTrans.put("52.89.98.213", "m16");
+    schedulerTrans.put("52.32.48.185", "m17");
+    schedulerTrans.put("52.39.84.224", "m18");
+    schedulerTrans.put("34.218.107.169", "m19");
+    schedulerTrans.put("54.187.129.27", "m20");
     // receive app report
     int port = 50050;
     try {
@@ -63,16 +84,8 @@ public class Receiver implements Runnable {
   }
 
   public static String hostTranslation(String host) {
-    String hostName = "unknown";
-    if (host.equals("172.28.142.176"))
-      hostName = "slave1";
-    else if (host.equals("172.28.140.65"))
-      hostName = "slave2";
-    else if (host.equals("172.28.142.226"))
-      hostName = "slave3";
-    else if (host.equals("172.28.136.3"))
-      hostName = "master";
-    else
+    String hostName = schedulerTrans.get(host);
+    if (hostName == null)
       hostName = host;
 
     return hostName;
@@ -96,8 +109,10 @@ public class Receiver implements Runnable {
         }
       }
     } else {
-      System.out.println("return local ip: " + InetAddress.getLocalHost().toString());
-      destination = InetAddress.getLocalHost().toString().split("/")[1];
+      System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      System.out.println("WRONG! No machine process " + appType + " yet!");
+      System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      //destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
 
     //destination = "172.28.142.176";  // always use slave1
