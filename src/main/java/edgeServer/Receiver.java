@@ -115,15 +115,19 @@ public class Receiver implements Runnable {
       //destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
 
-    //destination = "172.28.142.176";  // always use slave1
-    System.out.println("*****************************************");
-    System.out.println("*****************************************");
-    System.out.println("*****************************************");
-    System.out.println("[RuiSchedule] appType: " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
+    System.out.println("[RuiSchedule] appType, " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
+
     System.out.println("[RuiSchedule] appRate: " + appRate);
-    System.out.println("*****************************************");
-    System.out.println("*****************************************");
-    System.out.println("*****************************************");
+    for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
+      System.out.println("[AppRate] appType: " + entry1.getKey());
+      StringBuffer sb = new StringBuffer();
+      sb.append("[AppRate] ");
+      for (Map.Entry<String, Double> entry2 : entry1.getValue().entrySet()) {
+        sb.append(schedulerTrans.get(entry2.getKey()) + ":" + entry2.getValue() + ",  ");
+      }
+      sb.append("\n");
+      System.out.println(sb.toString());
+    }
 
     return destination;
   }
@@ -205,7 +209,7 @@ public class Receiver implements Runnable {
             //sender.sync(appType, host, rawRte);
           }
           */
-          filteredRate = 0.8 * prevRate + 0.2 * rawRte;
+          filteredRate = 0.6 * prevRate + 0.4 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
           filteredRate = rawRte;
