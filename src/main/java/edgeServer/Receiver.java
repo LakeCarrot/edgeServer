@@ -119,7 +119,7 @@ public class Receiver implements Runnable {
     System.out.println("*************************************************");
     System.out.println("*************************************************");
     System.out.println("[RuiSchedule] appType: " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
-    System.out.println("[RuiSchedule][AppRate] appRate: ");
+    System.out.println("[RuiSchedule][AppRate] appRate at " + System.currentTimeMillis());
     for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
       System.out.println("[RuiSchedule][AppRate] appType: " + entry1.getKey());
       StringBuffer sb = new StringBuffer();
@@ -209,17 +209,13 @@ public class Receiver implements Runnable {
       if (rateMeta != null) {
         if (rateMeta.containsKey(host)) {
           prevRate = rateMeta.get(host);
-          /*
-          if (contentionThres * prevRate >= rawRte) {
-            //sender.sync(appType, host, rawRte);
-          }
-          */
           filteredRate = 0.2 * prevRate + 0.8 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
           filteredRate = rawRte;
           rateMeta.put(host, rawRte);
         }
+        appRate.put(appType, rateMeta);
       } else {
         filteredRate = rawRte;
         rateMeta = new HashMap<>();
@@ -230,6 +226,20 @@ public class Receiver implements Runnable {
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("[RuiSchedule] RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte);
+      System.out.println("[RuiSchedule][AppRate2] appRate at " + System.currentTimeMillis());
+      for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
+        System.out.println("[RuiSchedule][AppRate2] appType: " + entry1.getKey());
+        StringBuffer sb = new StringBuffer();
+        sb.append("[RuiSchedule][AppRate2] ");
+        for (Map.Entry<String, Double> entry2 : entry1.getValue().entrySet()) {
+          sb.append(schedulerTrans.get(entry2.getKey()) + ":" + entry2.getValue() + ",  ");
+        }
+        sb.append("\n");
+        System.out.println(sb.toString());
+        System.out.println("*************************************************");
+        System.out.println("*************************************************");
+        System.out.println("*************************************************");
+      }
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
