@@ -185,6 +185,7 @@ public class EdgeServer {
 	static class OffloadingImpl extends OffloadingGrpc.OffloadingImplBase {
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
+		  System.out.println("SCHEDULER BEING CALLED");
 			String appType = req.getMessage();
 			String destinationIP = null;
 			try {
