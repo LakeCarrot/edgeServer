@@ -209,7 +209,7 @@ public class Receiver implements Runnable {
             //sender.sync(appType, host, rawRte);
           }
           */
-          filteredRate = 0.6 * prevRate + 0.4 * rawRte;
+          filteredRate = 0.2 * prevRate + 0.8 * rawRte;
           rateMeta.put(host, filteredRate);
         } else {
           filteredRate = rawRte;
