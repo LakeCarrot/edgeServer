@@ -226,6 +226,7 @@ public class Receiver implements Runnable {
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("[RuiSchedule] RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte);
+      /*
       System.out.println("[RuiSchedule][AppRate2] appRate at " + System.currentTimeMillis());
       for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
         System.out.println("[RuiSchedule][AppRate2] appType: " + entry1.getKey());
@@ -240,6 +241,7 @@ public class Receiver implements Runnable {
         System.out.println("*************************************************");
         System.out.println("*************************************************");
       }
+      */
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
