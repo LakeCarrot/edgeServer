@@ -7,6 +7,7 @@ import io.grpc.stub.StreamObserver;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 import edgeOffloading.OffloadingGrpc;
 import edgeOffloading.OffloadingOuterClass.OffloadingRequest;
@@ -18,6 +19,7 @@ public class Receiver implements Runnable {
   static double rate1 = 0;
   static double rate2 = 0;
   final static Map<String, String> schedulerTrans = new HashMap<>();
+  static ReentrantLock lock = new ReentrantLock();
 
   public void run() {
     schedulerTrans.put("34.218.97.178", "m1");
@@ -203,6 +205,7 @@ public class Receiver implements Runnable {
       double filteredRate = 0;
       double prevRate = 0;
       double contentionThres = 0.9;
+      lock.lock();
       Map<String, Double> rateMeta = appRate.get(appType);
       //Sender sender = new Sender();
       if (rateMeta != null) {
@@ -222,6 +225,7 @@ public class Receiver implements Runnable {
         appRate.put(appType, rateMeta);
         //sender.sync(appType, host, rawRte);
       }
+      lock.unlock();
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
       System.out.println("[RuiSchedule] RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte);
