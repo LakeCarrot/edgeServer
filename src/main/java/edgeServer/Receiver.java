@@ -229,7 +229,7 @@ public class Receiver implements Runnable {
       }
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
-      System.out.println("RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte);
+      System.out.println("[RuiSchedule] RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte);
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
