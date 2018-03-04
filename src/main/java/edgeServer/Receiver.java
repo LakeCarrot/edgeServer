@@ -119,7 +119,7 @@ public class Receiver implements Runnable {
     System.out.println("*****************************************");
     System.out.println("*****************************************");
     System.out.println("*****************************************");
-    System.out.println("[RuiSchedule] appType: " + appType + ", hostName: " + hostTranslation(destination));
+    System.out.println("[RuiSchedule] appType: " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
     System.out.println("[RuiSchedule] appRate: " + appRate);
     System.out.println("*****************************************");
     System.out.println("*****************************************");
