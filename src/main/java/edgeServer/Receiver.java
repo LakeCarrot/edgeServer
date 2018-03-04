@@ -115,13 +115,13 @@ public class Receiver implements Runnable {
       //destination = InetAddress.getLocalHost().toString().split("/")[1];
     }
 
-    System.out.println("[RuiSchedule] appType, " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
+    System.out.println("[RuiSchedule][ScheduleDecision] appType, " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
 
-    System.out.println("[RuiSchedule] appRate: " + appRate);
+    System.out.println("[RuiSchedule][AppRate] appRate: " + appRate);
     for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
-      System.out.println("[AppRate] appType: " + entry1.getKey());
+      System.out.println("[RuiSchedule][AppRate] appType: " + entry1.getKey());
       StringBuffer sb = new StringBuffer();
-      sb.append("[AppRate] ");
+      sb.append("[RuiSchedule][AppRate] ");
       for (Map.Entry<String, Double> entry2 : entry1.getValue().entrySet()) {
         sb.append(schedulerTrans.get(entry2.getKey()) + ":" + entry2.getValue() + ",  ");
       }
