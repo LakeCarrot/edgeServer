@@ -46,7 +46,7 @@ public class Receiver implements Runnable {
 		for(String j : Arrays.asList("face", "speech", "plate", "ocr")) {
 			appRate.put(j, new HashMap<>());
 			for(String i : schedulerTrans.keySet()) {
-				appRate.get(j).put(i, Double.MAX_VALUE);
+				appRate.get(j).put(i, 100000);
 			}
     }
     // receive app report
@@ -218,7 +218,11 @@ public class Receiver implements Runnable {
       if (rateMeta != null) {
         if (rateMeta.containsKey(host)) {
           prevRate = rateMeta.get(host);
-          filteredRate = 0.8 * prevRate + 0.2 * rawRte;
+					if(prevRate != 100000) {
+          	filteredRate = 0.8 * prevRate + 0.2 * rawRte;
+					} else {
+						filteredRate = prevRate;
+					}
           rateMeta.put(host, filteredRate);
         } else {
           filteredRate = rawRte;
