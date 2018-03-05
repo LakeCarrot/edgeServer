@@ -106,16 +106,22 @@ public class Receiver implements Runnable {
     System.out.println("rateMeta: " + rateMeta);
     if (rateMeta != null) {
       double maxRate = 0;
+      List<String> dstList = new ArrayList<>();
       double curRate = 0;
       double totalRates = 0;
       List<Double> machineRates = new ArrayList<>();
       double prob = 0;
       for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
         if (maxRate < entry.getValue()) {
-          destination = entry.getKey();
+          dstList = new ArrayList<>();
+          dstList.add(entry.getKey());
           maxRate = entry.getValue();
+        } else if (maxRate == entry.getValue()) {
+          dstList.add(entry.getKey());
         }
       }
+      Random r = new Random();
+      destination = dstList.get(r.nextInt(dstList.size()));
     } else {
       System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       System.out.println("WRONG! No machine process " + appType + " yet!");
