@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b723faf3-59b8-417c-b713-d3f9a7e14870" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" afterPath="$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java" />
-    </list>
+    <list default="true" id="b723faf3-59b8-417c-b713-d3f9a7e14870" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -20,7 +18,7 @@
     </projectState>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.41466597">
+    <splitter split-orientation="horizontal" split-proportion="0.5039144">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="750">
           <file leaf-file-name="Sender.java" pinned="false" current-in-tab="false">
@@ -38,7 +36,7 @@
           <file leaf-file-name="EdgeServer.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="654">
+                <state relative-caret-position="566">
                   <caret line="192" column="33" lean-forward="false" selection-start-line="192" selection-start-column="33" selection-end-line="192" selection-end-column="33" />
                   <folding>
                     <element signature="e#0#7925#0" expanded="true" />
@@ -57,8 +55,8 @@
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="643">
-                  <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+                <state relative-caret-position="497">
+                  <caret line="229" column="46" lean-forward="false" selection-start-line="229" selection-start-column="46" selection-end-line="229" selection-end-column="46" />
                   <folding>
                     <element signature="e#2059#2373#0" expanded="true" />
                     <element signature="e#2372#2373#0" expanded="true" />
@@ -92,12 +90,13 @@
       <find>-2</find>
       <find>req</find>
       <find>pull</find>
-      <find>RuiSchedule</find>
       <find>start the container</find>
       <find>containerReady</find>
       <find>appRate</find>
       <find>[AppRate]</find>
       <find>appRate:</find>
+      <find>AppRate</find>
+      <find>RuiSchedule</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -778,12 +777,12 @@
       <workItem from="1518299529586" duration="1797000" />
       <workItem from="1518318499686" duration="20038000" />
       <workItem from="1518713939323" duration="50198000" />
-      <workItem from="1519248572950" duration="75873000" />
+      <workItem from="1519248572950" duration="79264000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175197000" />
+    <option name="totallyTimeSpent" value="178588000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="0" width="3864" height="2074" extended-state="0" />
@@ -1296,7 +1295,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="654">
+        <state relative-caret-position="566">
           <caret line="192" column="33" lean-forward="false" selection-start-line="192" selection-start-column="33" selection-end-line="192" selection-end-column="33" />
           <folding>
             <element signature="e#0#7925#0" expanded="true" />
@@ -1309,8 +1308,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="32" column="43" lean-forward="true" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+        <state relative-caret-position="497">
+          <caret line="229" column="46" lean-forward="false" selection-start-line="229" selection-start-column="46" selection-end-line="229" selection-end-column="46" />
           <folding>
             <element signature="e#2059#2373#0" expanded="true" />
             <element signature="e#2372#2373#0" expanded="true" />
