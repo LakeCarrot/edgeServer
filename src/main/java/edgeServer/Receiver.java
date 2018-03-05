@@ -46,7 +46,7 @@ public class Receiver implements Runnable {
 		for(String j : Arrays.asList("face", "speech", "plate", "ocr")) {
 			appRate.put(j, new HashMap<>());
 			for(String i : schedulerTrans.keySet()) {
-				appRate.get(j).put(i, 100000);
+				appRate.get(j).put(i, 100000.0);
 			}
     }
     // receive app report
