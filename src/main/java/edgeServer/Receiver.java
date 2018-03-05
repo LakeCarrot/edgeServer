@@ -43,11 +43,11 @@ public class Receiver implements Runnable {
     schedulerTrans.put("34.218.107.169", "m19");
     schedulerTrans.put("54.187.129.27", "m20");
     // assign initial warm-up speed to MAX_VALUE
-    for(String i : schedulerTrans.keySet()) {
-      for(String j : Arrays.asList("face", "speech", "plate", "ocr")) {
-        appRate.put(j, new HashMap<>());
-        appRate.get(j).put(i, Double.MAX_VALUE);
-      }
+		for(String j : Arrays.asList("face", "speech", "plate", "ocr")) {
+			appRate.put(j, new HashMap<>());
+			for(String i : schedulerTrans.keySet()) {
+				appRate.get(j).put(i, Double.MAX_VALUE);
+			}
     }
     // receive app report
     int port = 50050;
