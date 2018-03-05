@@ -221,15 +221,17 @@ public class Receiver implements Runnable {
 					if(prevRate != 100000) {
           	filteredRate = 0.8 * prevRate + 0.2 * rawRte;
 					} else {
-						filteredRate = prevRate;
+						filteredRate = rawRte;
 					}
           rateMeta.put(host, filteredRate);
         } else {
+          System.out.println("WRONG!!!!");
           filteredRate = rawRte;
           rateMeta.put(host, rawRte);
         }
         appRate.put(appType, rateMeta);
       } else {
+        System.out.println("WRONG!!!!");
         filteredRate = rawRte;
         rateMeta = new HashMap<>();
         rateMeta.put(host, rawRte);
