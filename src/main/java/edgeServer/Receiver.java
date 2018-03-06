@@ -178,9 +178,9 @@ public class Receiver implements Runnable {
     if(sessionQueue.size() == 80) {
       Node outdated = sessionQueue.poll();
       Map<String, Integer> tmp = activeSession.get(outdated.hostName);
-      tmp.put(appType, tmp.get(appType) - 1);
+      tmp.put(outdated.appType, tmp.get(outdated.appType) - 1);
       activeSession.put(outdated.hostName, tmp);
-      System.out.println("[Bo Active] Delete Old Session : " + appType + " : " + outdated.hostName);
+      System.out.println("[Bo Active] Delete Old Session : " + outdated.appType + " : " + outdated.hostName);
     }
 
     /*
