@@ -186,11 +186,12 @@ public class EdgeServer {
 		@Override
 		public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
 		  System.out.println("SCHEDULER BEING CALLED");
-			String appType = req.getMessage();
+			String appType = req.getMessage().split(":")[0];
+			String serverID = req.getMessage().split(":")[1];
 			String destinationIP = null;
 			try {
-        System.out.println("try to find destination for " + appType);
-				destinationIP = receiver.getAppDest(appType);
+        System.out.println("[RuiReal] try to find destination for " + appType + " from server " + serverID);
+				destinationIP = receiver.getAppDest(appType, serverID);
 			} catch (Exception e) {
 				new Exception().printStackTrace();
 			}

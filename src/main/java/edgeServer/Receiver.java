@@ -19,6 +19,7 @@ public class Receiver implements Runnable {
   static double rate1 = 0;
   static double rate2 = 0;
   final static Map<String, String> schedulerTrans = new HashMap<>();
+  static Map<String, List<String>> neighborList = new HashMap<>();
   static ReentrantLock lock = new ReentrantLock();
 
   public void run() {
@@ -42,6 +43,26 @@ public class Receiver implements Runnable {
     schedulerTrans.put("52.39.84.224", "m18");
     schedulerTrans.put("34.218.107.169", "m19");
     schedulerTrans.put("54.187.129.27", "m20");
+    // initialize the neighborList
+    Random r = new Random();
+    int numNeighbors = 12;
+    List<String> neighb;
+    String hostName;
+    for (int iter = 1; iter <= 20; iter++) {
+      neighb = new ArrayList<>();
+      for (int cnt = 1; cnt < numNeighbors; cnt++) {
+        hostName = "m" + Integer.toString(r.nextInt(20) + 1);
+        for (Map.Entry<String, String> entry : schedulerTrans.entrySet()) {
+          if (hostName.equals(entry.getValue())) {
+            neighb.add(entry.getKey());
+            break;
+          }
+        }
+      }
+      neighborList.put("m" + Integer.toString(iter), neighb);
+    }
+    System.out.println("[RuiReal] neighborList: " + neighborList);
+
     // assign initial warm-up speed to MAX_VALUE
 		for(String j : Arrays.asList("face", "speech", "plate", "ocr")) {
 			appRate.put(j, new HashMap<>());
@@ -100,10 +121,22 @@ public class Receiver implements Runnable {
     return hostName;
   }
 
-  public String getAppDest(String appType) throws Exception {
-    Map<String, Double> rateMeta = appRate.get(appType);
+  public String getAppDest(String appType, String serverID) throws Exception {
+    Map<String, Double> rateMeta_ori = appRate.get(appType);
     String destination = null;
-    System.out.println("rateMeta: " + rateMeta);
+
+    /*
+      Ours (start)
+     */
+    Map<String, Double> rateMeta = new HashMap<>();
+    System.out.println("[RuiReal] server " + serverID + " has " + neighborList.get(serverID).size() + " neighbors.");
+    for(String neighborIP : neighborList.get(serverID)) {
+      rateMeta.put(neighborIP, rateMeta_ori.get(neighborIP));
+    }
+    /*
+      Ours (stop)
+     */
+
     if (rateMeta != null) {
       double maxRate = 0;
       List<String> dstList = new ArrayList<>();
@@ -133,6 +166,8 @@ public class Receiver implements Runnable {
     System.out.println("*************************************************");
     System.out.println("*************************************************");
     System.out.println("[RuiSchedule] appType: " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
+
+
     System.out.println("[RuiSchedule][AppRate] appRate at " + System.currentTimeMillis());
     for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
       System.out.println("[RuiSchedule][AppRate] appType: " + entry1.getKey());
@@ -173,39 +208,6 @@ public class Receiver implements Runnable {
       responseObserver.onCompleted();
     }
   }
-
-  /*
-  static int lruCache(String host) {
-    // 400 types of apps in total
-    // preloading 70% (280) of the app types
-    // cache entry: 9
-    Random rand = new Random();
-    int  n = rand.nextInt(400);
-    System.out.println("n: " + n);
-    int downloadTime = 0;
-    if (n > 280) {
-      // docker image is not preloaded
-      Set<Integer> cachedItems = serverCache.get(host);
-      if (cachedItems != null) {
-        if (!cachedItems.contains(n)) {
-          // n is not cached
-          downloadTime = 100;
-          if (cachedItems.size() < 9)
-            cachedItems.add(n);
-          else {
-            // cache replacement algo
-          }
-        }
-      } else {
-        // empty cache, so add n to it
-        cachedItems = new HashSet<>();
-        cachedItems.add(n);
-      }
-    }
-
-    return downloadTime;
-  }
-  */
 
   static class AppReportImpl extends OffloadingGrpc.OffloadingImplBase {
     @Override
@@ -251,22 +253,6 @@ public class Receiver implements Runnable {
       String hostName = hostTranslation(host);
       System.out.println("[RuiSchedule] RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte + " : " + sessionID);
       System.out.println("appRate: " + appRate);
-      /*
-      System.out.println("[RuiSchedule][AppRate2] appRate at " + System.currentTimeMillis());
-      for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
-        System.out.println("[RuiSchedule][AppRate2] appType: " + entry1.getKey());
-        StringBuffer sb = new StringBuffer();
-        sb.append("[RuiSchedule][AppRate2] ");
-        for (Map.Entry<String, Double> entry2 : entry1.getValue().entrySet()) {
-          sb.append(schedulerTrans.get(entry2.getKey()) + ":" + entry2.getValue() + ",  ");
-        }
-        sb.append("\n");
-        System.out.println(sb.toString());
-        System.out.println("*************************************************");
-        System.out.println("*************************************************");
-        System.out.println("*************************************************");
-      }
-      */
       OffloadingReply reply = OffloadingReply.newBuilder()
           .setMessage("I am your father! \\\\(* W *)//")
           .build();
