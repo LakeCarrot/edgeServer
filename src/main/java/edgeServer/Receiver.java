@@ -202,9 +202,8 @@ public class Receiver implements Runnable {
     Map<String, Double> rateMeta = new HashMap<>();
     List<String> idleMachine = new LinkedList<>();
     System.out.println("[RuiReal] server " + serverID + " has " + neighborList.get(serverID).size() + " neighbors.");
-    System.out.println(rateMeta_ori);
     for(String neighborIP : neighborList.get(serverID)) {
-      if(activeSession.get(neighborIP).get(appType) != 0 || rateMeta_ori.get(neighborIP) == Double.MAX_VALUE) {
+      if(activeSession.get(neighborIP).get(appType) != 0 || rateMeta_ori.get(neighborIP) == 100000) {
         rateMeta.put(neighborIP, rateMeta_ori.get(neighborIP));
       } else {
         System.out.println("[DEBUG] idleMachine: " + idleMachine);
