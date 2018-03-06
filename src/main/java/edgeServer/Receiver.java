@@ -193,6 +193,7 @@ public class Receiver implements Runnable {
       if(activeSession.get(neighborIP).get(appType) != 0 || rateMeta_ori.get(neighborIP) == Double.MAX_VALUE) {
         rateMeta.put(neighborIP, rateMeta_ori.get(neighborIP));
       } else {
+        System.out.println("[DEBUG] idleMachine: " + idleMachine);
         idleMachine.add(neighborIP);
       }
     }
