@@ -22,6 +22,16 @@ public class Receiver implements Runnable {
   static Map<String, List<String>> neighborList = new HashMap<>();
   static ReentrantLock lock = new ReentrantLock();
 
+  String findIpFromHostName(String hostName) {
+    for (Map.Entry<String, String> entry : schedulerTrans.entrySet()) {
+      if (hostName.equals(entry.getValue())) {
+        return entry.getKey();
+      }
+    }
+
+    return null;
+  }
+
   public void run() {
     schedulerTrans.put("34.218.97.178", "m1");
     schedulerTrans.put("52.32.37.78", "m2");
@@ -50,14 +60,11 @@ public class Receiver implements Runnable {
     String hostName;
     for (int iter = 1; iter <= 20; iter++) {
       neighb = new ArrayList<>();
+      hostName = "m" + Integer.toString(iter);
+      neighb.add(findIpFromHostName(hostName));
       for (int cnt = 1; cnt <= numNeighbors; cnt++) {
         hostName = "m" + Integer.toString(r.nextInt(20) + 1);
-        for (Map.Entry<String, String> entry : schedulerTrans.entrySet()) {
-          if (hostName.equals(entry.getValue())) {
-            neighb.add(entry.getKey());
-            break;
-          }
-        }
+        neighb.add(findIpFromHostName(hostName));
       }
       neighborList.put("m" + Integer.toString(iter), neighb);
     }
