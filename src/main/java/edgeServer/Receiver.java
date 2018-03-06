@@ -19,6 +19,7 @@ public class Receiver implements Runnable {
   static double rate1 = 0;
   static double rate2 = 0;
   final static Map<String, String> schedulerTrans = new HashMap<>();
+  static List<Integer> machineList = new ArrayList<>();
   static Map<String, List<String>> neighborList = new HashMap<>();
   static Map<String, Map<String, Integer>> activeSession = new HashMap<>(); // hostname, apptype, #activeSession
   static ReentrantLock lock = new ReentrantLock();
@@ -94,17 +95,29 @@ public class Receiver implements Runnable {
     initActiveSession("52.39.84.224");
     initActiveSession("34.218.107.169");
     initActiveSession("54.187.129.27");
+    for (int cnt = 1; cnt <= 20; cnt++) {
+      machineList.add(cnt);
+    }
     // initialize the neighborList
     Random r = new Random();
     int numNeighbors = 12;
     List<String> neighb;
     String hostName;
+    Set<Integer> selectedMachines;
     for (int iter = 1; iter <= 20; iter++) {
       neighb = new ArrayList<>();
+      selectedMachines = new HashSet<>();
       hostName = "m" + Integer.toString(iter);
       neighb.add(findIpFromHostName(hostName));
-      for (int cnt = 1; cnt <= numNeighbors; cnt++) {
-        hostName = "m" + Integer.toString(r.nextInt(20) + 1);
+      int rand;
+      while (selectedMachines.size() < 12) {
+        rand = r.nextInt(20) + 1;
+        if (rand != iter)
+          selectedMachines.add(rand);
+      }
+      System.out.println("[RuiNeighbor] machine " + iter + "'s neighbors: " + selectedMachines);
+      for (Integer machineId : selectedMachines) {
+        hostName = "m" + Integer.toString(machineId);
         neighb.add(findIpFromHostName(hostName));
       }
       neighborList.put("m" + Integer.toString(iter), neighb);
@@ -189,6 +202,7 @@ public class Receiver implements Runnable {
     Map<String, Double> rateMeta = new HashMap<>();
     List<String> idleMachine = new LinkedList<>();
     System.out.println("[RuiReal] server " + serverID + " has " + neighborList.get(serverID).size() + " neighbors.");
+    System.out.println(rateMeta_ori);
     for(String neighborIP : neighborList.get(serverID)) {
       if(activeSession.get(neighborIP).get(appType) != 0 || rateMeta_ori.get(neighborIP) == Double.MAX_VALUE) {
         rateMeta.put(neighborIP, rateMeta_ori.get(neighborIP));
