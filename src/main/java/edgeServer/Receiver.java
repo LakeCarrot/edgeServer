@@ -20,7 +20,18 @@ public class Receiver implements Runnable {
   static double rate2 = 0;
   final static Map<String, String> schedulerTrans = new HashMap<>();
   static Map<String, List<String>> neighborList = new HashMap<>();
+  static Map<String, Map<String, Integer>> activeSession = new HashMap<>(); // hostname, apptype, #activeSession
   static ReentrantLock lock = new ReentrantLock();
+  Queue<Node> sessionQueue = new LinkedList<>();
+
+  class Node {
+    String appType;
+    String hostName;
+    public Node(String appType, String hostName) {
+      this.appType = appType;
+      this.hostName = hostName;
+    }
+  }
 
   String findIpFromHostName(String hostName) {
     for (Map.Entry<String, String> entry : schedulerTrans.entrySet()) {
@@ -30,6 +41,15 @@ public class Receiver implements Runnable {
     }
 
     return null;
+  }
+
+  private void initActiveSession(String hostName) {
+    Map<String, Integer> tmp = new HashMap<>();
+    tmp.put("face", 0);
+    tmp.put("speech", 0);
+    tmp.put("plate", 0);
+    tmp.put("ocr", 0);
+    activeSession.put(hostName, tmp);
   }
 
   public void run() {
@@ -53,6 +73,27 @@ public class Receiver implements Runnable {
     schedulerTrans.put("52.39.84.224", "m18");
     schedulerTrans.put("34.218.107.169", "m19");
     schedulerTrans.put("54.187.129.27", "m20");
+    // initialize the active session list
+    initActiveSession("34.218.97.178");
+    initActiveSession("52.32.37.78");
+    initActiveSession("34.210.236.180");
+    initActiveSession("35.162.89.207");
+    initActiveSession("34.215.123.179");
+    initActiveSession("34.218.85.62");
+    initActiveSession("34.218.40.221");
+    initActiveSession("54.70.118.25");
+    initActiveSession("34.215.4.4");
+    initActiveSession("34.212.255.112");
+    initActiveSession("34.218.34.145");
+    initActiveSession("34.212.158.200");
+    initActiveSession("35.165.231.66");
+    initActiveSession("35.160.178.233");
+    initActiveSession("35.162.173.174");
+    initActiveSession("52.89.98.213");
+    initActiveSession("52.32.48.185");
+    initActiveSession("52.39.84.224");
+    initActiveSession("34.218.107.169");
+    initActiveSession("54.187.129.27");
     // initialize the neighborList
     Random r = new Random();
     int numNeighbors = 12;
@@ -131,20 +172,38 @@ public class Receiver implements Runnable {
   public String getAppDest(String appType, String serverID) throws Exception {
     Map<String, Double> rateMeta_ori = appRate.get(appType);
     String destination = null;
+    double pRatio = 0.2;
+
+    // poll the head if the queue is larger than 80
+    if(sessionQueue.size() == 80) {
+      Node outdated = sessionQueue.poll();
+      Map<String, Integer> tmp = activeSession.get(outdated.hostName);
+      tmp.put(appType, tmp.get(appType) - 1);
+      activeSession.put(outdated.hostName, tmp);
+      System.out.println("[Bo Active] Delete Old Session : " + appType + " : " + outdated.hostName);
+    }
 
     /*
       Ours (start)
      */
     Map<String, Double> rateMeta = new HashMap<>();
+    List<String> idleMachine = new LinkedList<>();
     System.out.println("[RuiReal] server " + serverID + " has " + neighborList.get(serverID).size() + " neighbors.");
     for(String neighborIP : neighborList.get(serverID)) {
-      rateMeta.put(neighborIP, rateMeta_ori.get(neighborIP));
+      if(activeSession.get(neighborIP).get(appType) != 0 || rateMeta_ori.get(neighborIP) == Double.MAX_VALUE) {
+        rateMeta.put(neighborIP, rateMeta_ori.get(neighborIP));
+      } else {
+        idleMachine.add(neighborIP);
+      }
     }
     /*
       Ours (stop)
      */
 
-    if (rateMeta != null) {
+    double rRatio = new Random().nextDouble();
+    int idleSize = idleMachine.size();
+
+    if (idleSize == 0 && rateMeta != null) {
       double maxRate = 0;
       List<String> dstList = new ArrayList<>();
       double curRate = 0;
@@ -162,6 +221,30 @@ public class Receiver implements Runnable {
       }
       Random r = new Random();
       destination = dstList.get(r.nextInt(dstList.size()));
+    } else if (rateMeta != null && rRatio < pRatio){
+      double maxRate = 0;
+      List<String> dstList = new ArrayList<>();
+      double curRate = 0;
+      double totalRates = 0;
+      List<Double> machineRates = new ArrayList<>();
+      double prob = 0;
+      for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
+        if (maxRate < entry.getValue()) {
+          dstList = new ArrayList<>();
+          dstList.add(entry.getKey());
+          maxRate = entry.getValue();
+        } else if (maxRate == entry.getValue()) {
+          dstList.add(entry.getKey());
+        }
+      }
+      Random r = new Random();
+      destination = dstList.get(r.nextInt(dstList.size()));
+    } else if (idleSize != 0 && rRatio >= pRatio) {
+      destination = idleMachine.get(new Random().nextInt(idleSize));
+      System.out.println("[Bo Active] P offloading triggered" + " : " + appType + " : " + destination);
+    } else if (idleSize != 0 && rateMeta == null) {
+      destination = idleMachine.get(new Random().nextInt(idleSize));
+      System.out.println("[Bo Active] P offloading triggered" + " : " + appType + " : " + destination);
     } else {
       System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       System.out.println("WRONG! No machine process " + appType + " yet!");
@@ -174,6 +257,13 @@ public class Receiver implements Runnable {
     System.out.println("*************************************************");
     System.out.println("[RuiSchedule] appType: " + appType + ", hostName: " + hostTranslation(destination) + ", time: " + System.currentTimeMillis());
 
+    // Record the new request information
+    sessionQueue.add(new Node(appType, destination));
+    // update the new request to active session list
+    Map<String, Integer> tmp = activeSession.get(destination);
+    tmp.put(appType, tmp.get(appType) + 1);
+    activeSession.put(destination, tmp);
+    System.out.println("[Bo Active] Add new session : " + appType + " : " + destination);
 
     System.out.println("[RuiSchedule][AppRate] appRate at " + System.currentTimeMillis());
     for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
