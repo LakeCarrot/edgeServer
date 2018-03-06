@@ -212,9 +212,10 @@ public class Receiver implements Runnable {
     public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
       String reqMessage = req.getMessage();
       String host = reqMessage.split(":")[0];
+      String sessionID = reqMessage.split(":")[1];
       //int downloadTme = lruCache(host);
-      String appType = reqMessage.split(":")[1];
-      double rawRte = Double.parseDouble(reqMessage.split(":")[2]);
+      String appType = reqMessage.split(":")[2];
+      double rawRte = Double.parseDouble(reqMessage.split(":")[3]);
       double filteredRate = 0;
       double prevRate = 0;
       double contentionThres = 0.9;
@@ -247,7 +248,7 @@ public class Receiver implements Runnable {
       lock.unlock();
       long time = System.currentTimeMillis();
       String hostName = hostTranslation(host);
-      System.out.println("[RuiSchedule] RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte);
+      System.out.println("[RuiSchedule] RuiLog : " + time + " : " + hostName + " : " + appType + " : " + filteredRate + " : " + rawRte + " : " + sessionID);
       System.out.println("appRate: " + appRate);
       /*
       System.out.println("[RuiSchedule][AppRate2] appRate at " + System.currentTimeMillis());
