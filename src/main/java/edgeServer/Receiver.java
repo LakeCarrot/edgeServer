@@ -50,7 +50,7 @@ public class Receiver implements Runnable {
     String hostName;
     for (int iter = 1; iter <= 20; iter++) {
       neighb = new ArrayList<>();
-      for (int cnt = 1; cnt < numNeighbors; cnt++) {
+      for (int cnt = 1; cnt <= numNeighbors; cnt++) {
         hostName = "m" + Integer.toString(r.nextInt(20) + 1);
         for (Map.Entry<String, String> entry : schedulerTrans.entrySet()) {
           if (hostName.equals(entry.getValue())) {
