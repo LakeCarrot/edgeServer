@@ -210,6 +210,7 @@ public class Receiver implements Runnable {
   static class AppReportImpl extends OffloadingGrpc.OffloadingImplBase {
     @Override
     public void startService(OffloadingRequest req, StreamObserver<OffloadingReply> responseObserver) {
+      System.out.println("[RuiLog] " + req.getMessage());
       String reqMessage = req.getMessage();
       String host = reqMessage.split(":")[0];
       String sessionID = reqMessage.split(":")[1];
