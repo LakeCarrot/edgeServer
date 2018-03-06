@@ -203,53 +203,58 @@ public class Receiver implements Runnable {
     double rRatio = new Random().nextDouble();
     int idleSize = idleMachine.size();
 
-    if (idleSize == 0 && rateMeta != null) {
-      double maxRate = 0;
-      List<String> dstList = new ArrayList<>();
-      double curRate = 0;
-      double totalRates = 0;
-      List<Double> machineRates = new ArrayList<>();
-      double prob = 0;
-      for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
-        if (maxRate < entry.getValue()) {
-          dstList = new ArrayList<>();
-          dstList.add(entry.getKey());
-          maxRate = entry.getValue();
-        } else if (maxRate == entry.getValue()) {
-          dstList.add(entry.getKey());
+    if (idleSize == 0) {
+      if(rateMeta != null) {
+        double maxRate = 0;
+        List<String> dstList = new ArrayList<>();
+        double curRate = 0;
+        double totalRates = 0;
+        List<Double> machineRates = new ArrayList<>();
+        double prob = 0;
+        for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
+          if (maxRate < entry.getValue()) {
+            dstList = new ArrayList<>();
+            dstList.add(entry.getKey());
+            maxRate = entry.getValue();
+          } else if (maxRate == entry.getValue()) {
+            dstList.add(entry.getKey());
+          }
         }
+        Random r = new Random();
+        destination = dstList.get(r.nextInt(dstList.size()));
       }
-      Random r = new Random();
-      destination = dstList.get(r.nextInt(dstList.size()));
-    } else if (rateMeta != null && rRatio < pRatio){
-      double maxRate = 0;
-      List<String> dstList = new ArrayList<>();
-      double curRate = 0;
-      double totalRates = 0;
-      List<Double> machineRates = new ArrayList<>();
-      double prob = 0;
-      for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
-        if (maxRate < entry.getValue()) {
-          dstList = new ArrayList<>();
-          dstList.add(entry.getKey());
-          maxRate = entry.getValue();
-        } else if (maxRate == entry.getValue()) {
-          dstList.add(entry.getKey());
-        }
+      else {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("WRONG! No machine process " + appType + " yet!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        //destination = InetAddress.getLocalHost().toString().split("/")[1];
       }
-      Random r = new Random();
-      destination = dstList.get(r.nextInt(dstList.size()));
-    } else if (idleSize != 0 && rRatio >= pRatio) {
-      destination = idleMachine.get(new Random().nextInt(idleSize));
-      System.out.println("[Bo Active] P offloading triggered" + " : " + appType + " : " + destination);
-    } else if (idleSize != 0 && rateMeta == null) {
-      destination = idleMachine.get(new Random().nextInt(idleSize));
-      System.out.println("[Bo Active] P offloading triggered" + " : " + appType + " : " + destination);
     } else {
-      System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      System.out.println("WRONG! No machine process " + appType + " yet!");
-      System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-      //destination = InetAddress.getLocalHost().toString().split("/")[1];
+      if(rateMeta == null) {
+        destination = idleMachine.get(new Random().nextInt(idleSize));
+        System.out.println("[Bo Active] P offloading triggered1" + " : " + appType + " : " + destination);
+      } else if(rRatio >= pRatio) {
+        destination = idleMachine.get(new Random().nextInt(idleSize));
+        System.out.println("[Bo Active] P offloading triggered2" + " : " + appType + " : " + destination);
+      } else {
+        double maxRate = 0;
+        List<String> dstList = new ArrayList<>();
+        double curRate = 0;
+        double totalRates = 0;
+        List<Double> machineRates = new ArrayList<>();
+        double prob = 0;
+        for (Map.Entry<String, Double> entry : rateMeta.entrySet()) {
+          if (maxRate < entry.getValue()) {
+            dstList = new ArrayList<>();
+            dstList.add(entry.getKey());
+            maxRate = entry.getValue();
+          } else if (maxRate == entry.getValue()) {
+            dstList.add(entry.getKey());
+          }
+        }
+        Random r = new Random();
+        destination = dstList.get(r.nextInt(dstList.size()));
+      }
     }
 
     System.out.println("*************************************************");
@@ -263,7 +268,7 @@ public class Receiver implements Runnable {
     Map<String, Integer> tmp = activeSession.get(destination);
     tmp.put(appType, tmp.get(appType) + 1);
     activeSession.put(destination, tmp);
-    System.out.println("[Bo Active] Add new session : " + appType + " : " + destination);
+    System.out.println("[Bo Active] AddNewSession : " + appType + " : " + destination);
 
     System.out.println("[RuiSchedule][AppRate] appRate at " + System.currentTimeMillis());
     for (Map.Entry<String, Map<String, Double>> entry1 : appRate.entrySet()) {
