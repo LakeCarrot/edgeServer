@@ -100,7 +100,7 @@ public class Receiver implements Runnable {
     }
     // initialize the neighborList
     Random r = new Random();
-    int numNeighbors = 12;
+    int numNeighbors = 19;
     List<String> neighb;
     String hostName;
     Set<Integer> selectedMachines;
@@ -110,7 +110,7 @@ public class Receiver implements Runnable {
       hostName = "m" + Integer.toString(iter);
       neighb.add(findIpFromHostName(hostName));
       int rand;
-      while (selectedMachines.size() < 12) {
+      while (selectedMachines.size() < numNeighbors) {
         rand = r.nextInt(20) + 1;
         if (rand != iter)
           selectedMachines.add(rand);

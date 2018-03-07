@@ -38,8 +38,8 @@
           <file leaf-file-name="EdgeServer.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="792">
-                  <caret line="199" column="26" lean-forward="true" selection-start-line="199" selection-start-column="26" selection-end-line="199" selection-end-column="26" />
+                <state relative-caret-position="880">
+                  <caret line="213" column="5" lean-forward="true" selection-start-line="213" selection-start-column="5" selection-end-line="213" selection-end-column="5" />
                   <folding>
                     <element signature="e#0#8041#0" expanded="true" />
                     <element signature="imports" expanded="true" />
@@ -57,11 +57,11 @@
           <file leaf-file-name="Receiver.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="736">
-                  <caret line="211" column="5" lean-forward="true" selection-start-line="211" selection-start-column="5" selection-end-line="211" selection-end-column="5" />
+                <state relative-caret-position="265">
+                  <caret line="102" column="10" lean-forward="true" selection-start-line="102" selection-start-column="10" selection-end-line="102" selection-end-column="10" />
                   <folding>
-                    <element signature="e#5111#5425#0" expanded="true" />
-                    <element signature="e#5424#5425#0" expanded="true" />
+                    <element signature="e#5121#5435#0" expanded="true" />
+                    <element signature="e#5434#5435#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -100,6 +100,8 @@
       <find>RuiSchedule</find>
       <find>AppRate</find>
       <find>Bo</find>
+      <find>Active</find>
+      <find>Bo Active</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -779,7 +781,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="195914000" />
+    <option name="totallyTimeSpent" value="197519000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="0" width="3864" height="2074" extended-state="0" />
@@ -907,8 +909,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5111#5425#0" expanded="true" />
-            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5121#5435#0" expanded="true" />
+            <element signature="e#5434#5435#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -918,8 +920,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5111#5425#0" expanded="true" />
-            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5121#5435#0" expanded="true" />
+            <element signature="e#5434#5435#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -969,8 +971,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5111#5425#0" expanded="true" />
-            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5121#5435#0" expanded="true" />
+            <element signature="e#5434#5435#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1000,8 +1002,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5111#5425#0" expanded="true" />
-            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5121#5435#0" expanded="true" />
+            <element signature="e#5434#5435#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1051,8 +1053,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5111#5425#0" expanded="true" />
-            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5121#5435#0" expanded="true" />
+            <element signature="e#5434#5435#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1232,7 +1234,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/Thread.java" />
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.grpc/grpc-core/1.8.0/6d1550c33bdc95caf7768027312ed60c18c1103/grpc-core-1.8.0-sources.jar!/io/grpc/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="592">
@@ -1267,10 +1268,18 @@
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/String.java" />
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="750" column="0" lean-forward="true" selection-start-line="750" selection-start-column="0" selection-end-line="750" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/EdgeServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="199" column="26" lean-forward="true" selection-start-line="199" selection-start-column="26" selection-end-line="199" selection-end-column="26" />
+        <state relative-caret-position="880">
+          <caret line="213" column="5" lean-forward="true" selection-start-line="213" selection-start-column="5" selection-end-line="213" selection-end-column="5" />
           <folding>
             <element signature="e#0#8041#0" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -1282,11 +1291,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edgeServer/Receiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="736">
-          <caret line="211" column="5" lean-forward="true" selection-start-line="211" selection-start-column="5" selection-end-line="211" selection-end-column="5" />
+        <state relative-caret-position="265">
+          <caret line="102" column="10" lean-forward="true" selection-start-line="102" selection-start-column="10" selection-end-line="102" selection-end-column="10" />
           <folding>
-            <element signature="e#5111#5425#0" expanded="true" />
-            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5121#5435#0" expanded="true" />
+            <element signature="e#5434#5435#0" expanded="true" />
           </folding>
         </state>
       </provider>
