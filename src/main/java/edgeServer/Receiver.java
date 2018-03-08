@@ -100,7 +100,7 @@ public class Receiver implements Runnable {
     }
     // initialize the neighborList
     Random r = new Random();
-    int numNeighbors = 19;
+    int numNeighbors = 12;
     List<String> neighb;
     String hostName;
     Set<Integer> selectedMachines;
@@ -185,7 +185,7 @@ public class Receiver implements Runnable {
   public String getAppDest(String appType, String serverID) throws Exception {
     Map<String, Double> rateMeta_ori = appRate.get(appType);
     String destination = null;
-    double pRatio = 0.7;
+    double pRatio = 0.8;
 
     // poll the head if the queue is larger than 80
     if(sessionQueue.size() == 80) {
