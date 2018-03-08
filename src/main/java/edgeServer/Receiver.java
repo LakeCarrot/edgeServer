@@ -345,7 +345,7 @@ public class Receiver implements Runnable {
         if (rateMeta.containsKey(host)) {
           prevRate = rateMeta.get(host);
 					if(prevRate != 100000) {
-          	filteredRate = 0.8 * prevRate + 0.2 * rawRte;
+          	filteredRate = 0.3 * prevRate + 0.7 * rawRte;
 					} else {
 						filteredRate = rawRte;
 					}
