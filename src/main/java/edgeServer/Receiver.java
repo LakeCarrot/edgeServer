@@ -100,7 +100,7 @@ public class Receiver implements Runnable {
     }
     // initialize the neighborList
     Random r = new Random();
-    int numNeighbors = 12;
+    int numNeighbors = 19;
     List<String> neighb;
     String hostName;
     Set<Integer> selectedMachines;
