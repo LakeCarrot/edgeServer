@@ -185,7 +185,7 @@ public class Receiver implements Runnable {
   public String getAppDest(String appType, String serverID) throws Exception {
     Map<String, Double> rateMeta_ori = appRate.get(appType);
     String destination = null;
-    double pRatio = 0.2;
+    double pRatio = 0.7;
 
     // poll the head if the queue is larger than 80
     if(sessionQueue.size() == 80) {
