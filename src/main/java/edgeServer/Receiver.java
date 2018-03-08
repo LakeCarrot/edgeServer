@@ -53,6 +53,18 @@ public class Receiver implements Runnable {
     activeSession.put(hostName, tmp);
   }
 
+  private boolean isOdd(String hostIP) {
+    if(hostTranslation(hostIP).equals("m1") || hostTranslation(hostIP).equals("m3") ||
+        hostTranslation(hostIP).equals("m5") || hostTranslation(hostIP).equals("m7") ||
+        hostTranslation(hostIP).equals("m9") || hostTranslation(hostIP).equals("m11") ||
+        hostTranslation(hostIP).equals("m13") || hostTranslation(hostIP).equals("m15") ||
+        hostTranslation(hostIP).equals("m17") || hostTranslation(hostIP).equals("m19"))
+    {
+      return true;
+    }
+    return false;
+  }
+
   public void run() {
     schedulerTrans.put("34.218.97.178", "m1");
     schedulerTrans.put("52.32.37.78", "m2");
@@ -203,7 +215,7 @@ public class Receiver implements Runnable {
     List<String> idleMachine = new LinkedList<>();
     System.out.println("[RuiReal] server " + serverID + " has " + neighborList.get(serverID).size() + " neighbors.");
     for(String neighborIP : neighborList.get(serverID)) {
-      if(activeSession.get(neighborIP).get(appType) != 0 || rateMeta_ori.get(neighborIP) == 100000) {
+      if(activeSession.get(neighborIP).get(appType) != 0 || rateMeta_ori.get(neighborIP) == 100000 || isOdd(neighborIP)) {
         rateMeta.put(neighborIP, rateMeta_ori.get(neighborIP));
       } else {
         System.out.println("[DEBUG] idleMachine: " + idleMachine);
